@@ -1,0 +1,86 @@
+#       modified:   include/media/openmax/OMX_IVCommon.h
+#       modified:   opengl/include/EGL/eglext.h
+#       modified:   opengl/libs/EGL/eglApi.cpp
+#       modified:   opengl/libs/EGL/egl_entries.in
+diff --git a/frameworks/native/include/media/openmax/OMX_IVCommon.h b/frameworks/native/include/media/openmax/OMX_IVCommon.h
+index 85bf00d..db4a5e5 100644
+--- a/frameworks/native/include/media/openmax/OMX_IVCommon.h
++++ b/frameworks/native/include/media/openmax/OMX_IVCommon.h
+@@ -158,6 +158,7 @@ typedef enum OMX_COLOR_FORMATTYPE {
+      * */
+     OMX_COLOR_FormatAndroidOpaque = 0x7F000789,
+     OMX_TI_COLOR_FormatYUV420PackedSemiPlanar = 0x7F000100,
++    OMX_STE_COLOR_FormatYUV420PackedSemiPlanarMB = 0x7FA00000,
+     OMX_QCOM_COLOR_FormatYVU420SemiPlanar = 0x7FA30C00,
+     OMX_QCOM_COLOR_FormatYUV420PackedSemiPlanar64x32Tile2m8ka = 0x7FA30C03,
+     OMX_SEC_COLOR_FormatNV12Tiled = 0x7FC00002,
+diff --git a/frameworks/native/opengl/include/EGL/eglext.h b/frameworks/native/opengl/include/EGL/eglext.h
+index 6c505ed..8e100ad 100644
+--- a/frameworks/native/opengl/include/EGL/eglext.h
++++ b/frameworks/native/opengl/include/EGL/eglext.h
+@@ -313,6 +313,7 @@ typedef EGLBoolean (EGLAPIENTRYP PFNEGLQUERYSURFACEPOINTERANGLEPROC) (EGLDisplay
+ #endif
+ 
+ #if KHRONOS_SUPPORT_INT64   /* EGLuint64NV requires 64-bit uint support */
++#ifndef STE_HARDWARE
+ #ifndef EGL_NV_system_time
+ #define EGL_NV_system_time 1
+ typedef khronos_utime_nanoseconds_t EGLuint64NV;
+@@ -324,6 +325,7 @@ typedef EGLuint64NV (EGLAPIENTRYP PFNEGLGETSYSTEMTIMEFREQUENCYNVPROC) (void);
+ typedef EGLuint64NV (EGLAPIENTRYP PFNEGLGETSYSTEMTIMENVPROC) (void);
+ #endif
+ #endif
++#endif
+ 
+ #if KHRONOS_SUPPORT_INT64 /* EGLuint64KHR requires 64-bit uint support */
+ #ifndef EGL_KHR_stream
+diff --git a/frameworks/native/opengl/libs/EGL/eglApi.cpp b/frameworks/native/opengl/libs/EGL/eglApi.cpp
+index a243b32..595972c 100644
+--- a/frameworks/native/opengl/libs/EGL/eglApi.cpp
++++ b/frameworks/native/opengl/libs/EGL/eglApi.cpp
+@@ -124,13 +124,13 @@ static const extention_map_t sExtensionMap[] = {
+             (__eglMustCastToProperFunctionPointerType)&eglSignalSyncKHR },
+     { "eglGetSyncAttribKHR",
+             (__eglMustCastToProperFunctionPointerType)&eglGetSyncAttribKHR },
+-
++#ifndef STE_HARDWARE
+     // EGL_NV_system_time
+     { "eglGetSystemTimeFrequencyNV",
+             (__eglMustCastToProperFunctionPointerType)&eglGetSystemTimeFrequencyNV },
+     { "eglGetSystemTimeNV",
+             (__eglMustCastToProperFunctionPointerType)&eglGetSystemTimeNV },
+-
++#endif
+     // EGL_KHR_wait_sync
+     { "eglWaitSyncKHR",
+             (__eglMustCastToProperFunctionPointerType)&eglWaitSyncKHR },
+@@ -1449,6 +1449,7 @@ EGLBoolean eglPresentationTimeANDROID(EGLDisplay dpy, EGLSurface surface,
+ // ----------------------------------------------------------------------------
+ // NVIDIA extensions
+ // ----------------------------------------------------------------------------
++#ifndef STE_HARDWARE
+ EGLuint64NV eglGetSystemTimeFrequencyNV()
+ {
+     clearError();
+@@ -1484,3 +1485,4 @@ EGLuint64NV eglGetSystemTimeNV()
+ 
+     return setErrorQuiet(EGL_BAD_DISPLAY, 0);
+ }
++#endif
+diff --git a/frameworks/native/opengl/libs/EGL/egl_entries.in b/frameworks/native/opengl/libs/EGL/egl_entries.in
+index 70d0e52..138f41e 100644
+--- a/frameworks/native/opengl/libs/EGL/egl_entries.in
++++ b/frameworks/native/opengl/libs/EGL/egl_entries.in
+@@ -82,10 +82,10 @@ EGL_ENTRY(EGLClientBuffer, eglGetRenderBufferANDROID, EGLDisplay, EGLSurface)
+ EGL_ENTRY(EGLint, eglDupNativeFenceFDANDROID, EGLDisplay, EGLSyncKHR)
+ 
+ /* NVIDIA extensions */
+-
++#ifndef STE_HARDWARE
+ EGL_ENTRY(EGLuint64NV, eglGetSystemTimeFrequencyNV, void)
+ EGL_ENTRY(EGLuint64NV, eglGetSystemTimeNV, void)
+-
++#endif
+ /* IMG extensions */
+ 
+ EGL_ENTRY(EGLBoolean, eglHibernateProcessIMG, void)
