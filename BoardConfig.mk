@@ -42,7 +42,7 @@ BOARD_USES_GENERIC_AUDIO := false
 BOARD_USES_ALSA_AUDIO := true
 COMMON_GLOBAL_CFLAGS += -DSTE_AUDIO
 # hack for audio
-COMMON_GLOBAL_CFLAGS += -DMR0_AUDIO_BLOB -DSTE_SAMSUNG_HARDWARE
+COMMON_GLOBAL_CFLAGS += -DMR0_AUDIO_BLOB
 
 # WIFI
 WPA_SUPPLICANT_VERSION := VER_0_8_X
@@ -83,8 +83,13 @@ TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/sony/kumquat/releasetools/se
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/sony/kumquat/recovery/recovery-keys.c
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_10x18.h\"
 
-BOARD_UMS_LUNFILE := "/sys/devices/platform/musb-ux500.0/musb-hdrc/gadget/lun0/file"
+
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/musb-ux500.0/musb-hdrc/gadget/lun%d/file"
+
+
+#CWM recovery fix
+TARGET_RECOVERY_FSTAB = device/sony/kumquat/config/root/fstab.st-ericsson
+RECOVERY_FSTAB_VERSION := 2
 
 # Kernel information
 TARGET_KERNEL_CONFIG := xperiau_defconfig

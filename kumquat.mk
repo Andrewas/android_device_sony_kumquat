@@ -219,10 +219,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
    $(LOCAL_PATH)/config/media_profiles.xml:system/etc/media_profiles.xml
 
-# Recovery bootstrap (device-specific part)
-PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
-
 # Key layouts and touchscreen
 PRODUCT_COPY_FILES += \
    $(LOCAL_PATH)/config/AB8500_Hs_Button.kl:system/usr/keylayout/AB8500_Hs_Button.kl \
@@ -253,6 +249,10 @@ PRODUCT_COPY_FILES += \
 # Copy the Bluetooth permissions file. The permissions file also enables Bluetooth menu in Settings?
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml
+
+#Barometar permissions
+PRODUCT_COPY_FILES += \
+   frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml
 
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
