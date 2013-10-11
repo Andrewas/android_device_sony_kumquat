@@ -13,7 +13,7 @@ Getting Started :
     mkdir sony
     cd sony
     git clone https://github.com/Gava97/cm10.2_kumquat.git -b master kumquat
-    cd nypon
+    cd kumquat
 
 Now connect your phone which have runing FXP CM10 :
 
