@@ -194,8 +194,8 @@ PRODUCT_COPY_FILES += \
 # currently contain all of the bitmaps at mdpi density so
 # we do this little trick to fall back to the mdpi version
 # if the mdpi doesn't exist.
-PRODUCT_AAPT_CONFIG := normal mdpi mdpi
-PRODUCT_AAPT_PREF_CONFIG := mdpi
+PRODUCT_AAPT_CONFIG := normal mdpi hdpi
+PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 # Configuration scripts
 PRODUCT_COPY_FILES += \
