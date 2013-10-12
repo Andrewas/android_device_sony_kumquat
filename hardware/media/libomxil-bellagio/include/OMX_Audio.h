@@ -1308,4 +1308,3 @@ typedef struct OMX_AUDIO_CONFIG_NOISEREDUCTIONTYPE {
 
 #endif
 /* File EOF */
-
