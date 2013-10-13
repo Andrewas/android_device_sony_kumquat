@@ -1,7 +1,24 @@
+#       modified:   include/gui/GLConsumer.h
 #       modified:   include/media/openmax/OMX_IVCommon.h
+#       modified:   include/ui/PixelFormat.h
+#       modified:   include/ui/Region.h
+#       modified:   libs/gui/GLConsumer.cpp
+#       modified:   libs/ui/PixelFormat.cpp
 #       modified:   opengl/include/EGL/eglext.h
 #       modified:   opengl/libs/EGL/eglApi.cpp
 #       modified:   opengl/libs/EGL/egl_entries.in
+diff --git a/frameworks/native/include/gui/GLConsumer.h b/frameworks/native/include/gui/GLConsumer.h
+index f0a75dc..35aa19f 100644
+--- a/frameworks/native/include/gui/GLConsumer.h
++++ b/frameworks/native/include/gui/GLConsumer.h
+@@ -419,6 +419,7 @@ private:
+     // It is set to false by detachFromContext, and then set to true again by
+     // attachToContext.
+     bool mAttached;
++
+ };
+ 
+ // ----------------------------------------------------------------------------
 diff --git a/frameworks/native/include/media/openmax/OMX_IVCommon.h b/frameworks/native/include/media/openmax/OMX_IVCommon.h
 index 85bf00d..db4a5e5 100644
 --- a/frameworks/native/include/media/openmax/OMX_IVCommon.h
@@ -14,6 +31,127 @@ index 85bf00d..db4a5e5 100644
      OMX_QCOM_COLOR_FormatYVU420SemiPlanar = 0x7FA30C00,
      OMX_QCOM_COLOR_FormatYUV420PackedSemiPlanar64x32Tile2m8ka = 0x7FA30C03,
      OMX_SEC_COLOR_FormatNV12Tiled = 0x7FC00002,
+diff --git a/frameworks/native/include/ui/PixelFormat.h b/frameworks/native/include/ui/PixelFormat.h
+index 9f3e267..d89790d 100644
+--- a/frameworks/native/include/ui/PixelFormat.h
++++ b/frameworks/native/include/ui/PixelFormat.h
+@@ -64,6 +64,14 @@ enum {
+     PIXEL_FORMAT_RGBA_5551   = HAL_PIXEL_FORMAT_RGBA_5551,  // 16-bit ARGB
+     PIXEL_FORMAT_RGBA_4444   = HAL_PIXEL_FORMAT_RGBA_4444,  // 16-bit ARGB
+     PIXEL_FORMAT_A_8         = 8,                           // 8-bit A
++
++#ifdef STE_HARDWARE
++    // Added Support for YUV42XMBN,
++    // Required for Copybit CC acceleration
++    PIXEL_FORMAT_YCBCR42XMBN = HAL_PIXEL_FORMAT_YCBCR42XMBN,
++    PIXEL_FORMAT_YCbCr_420_SP = HAL_PIXEL_FORMAT_YCbCr_420_SP,
++    PIXEL_FORMAT_YCbCr_420_P = HAL_PIXEL_FORMAT_YCbCr_420_P,
++#endif
+ };
+ 
+ typedef int32_t PixelFormat;
+diff --git a/frameworks/native/include/ui/Region.h b/frameworks/native/include/ui/Region.h
+index ce91f3b..e2abfde 100644
+--- a/frameworks/native/include/ui/Region.h
++++ b/frameworks/native/include/ui/Region.h
+@@ -25,6 +25,10 @@
+ #include <ui/Rect.h>
+ #include <utils/Flattenable.h>
+ 
++#ifdef STE_HARDWARE
++#include <hardware/copybit.h>
++#endif
++
+ namespace android {
+ // ---------------------------------------------------------------------------
+ 
+@@ -210,6 +214,28 @@ Region& Region::operator -= (const Region& rhs) {
+ Region& Region::operator += (const Point& pt) {
+     return translateSelf(pt.x, pt.y);
+ }
++
++#ifdef STE_HARDWARE
++// ---------------------------------------------------------------------------
++
++struct region_iterator : public copybit_region_t {
++    region_iterator(const Region& region)
++        : b(region.begin()), e(region.end()) {
++        this->next = iterate;
++    }
++private:
++    static int iterate(copybit_region_t const * self, copybit_rect_t* rect) {
++        region_iterator const* me = static_cast<region_iterator const*>(self);
++        if (me->b != me->e) {
++            *reinterpret_cast<Rect*>(rect) = *me->b++;
++            return 1;
++        }
++        return 0;
++    }
++    mutable Region::const_iterator b;
++    Region::const_iterator const e;
++};
++#endif
+ // ---------------------------------------------------------------------------
+ }; // namespace android
+ 
+diff --git a/frameworks/native/libs/gui/GLConsumer.cpp b/frameworks/native/libs/gui/GLConsumer.cpp
+index bec0f90..7a7958c 100644
+--- a/frameworks/native/libs/gui/GLConsumer.cpp
++++ b/frameworks/native/libs/gui/GLConsumer.cpp
+@@ -552,8 +552,18 @@ bool GLConsumer::isExternalFormat(uint32_t format)
+     case HAL_PIXEL_FORMAT_YV12:
+     // Legacy/deprecated YUV formats
+     case HAL_PIXEL_FORMAT_YCbCr_422_SP:
+-    case HAL_PIXEL_FORMAT_YCrCb_420_SP:
++#ifndef STE_HARDWARE
++     case HAL_PIXEL_FORMAT_YCrCb_420_SP:
++#else
++    case HAL_PIXEL_FORMAT_YCbCr_420_SP:
++#endif
+     case HAL_PIXEL_FORMAT_YCbCr_422_I:
++#ifdef STE_HARDWARE
++    case HAL_PIXEL_FORMAT_YCrCb_422_SP:
++    case HAL_PIXEL_FORMAT_YCrCb_422_P:
++    case HAL_PIXEL_FORMAT_YCrCb_420_SP:
++    case HAL_PIXEL_FORMAT_YCrCb_420_P:
++#endif
+         return true;
+     }
+ 
+diff --git a/frameworks/native/libs/ui/PixelFormat.cpp b/frameworks/native/libs/ui/PixelFormat.cpp
+index 3ced41d..e73dac8 100644
+--- a/frameworks/native/libs/ui/PixelFormat.cpp
++++ b/frameworks/native/libs/ui/PixelFormat.cpp
+@@ -100,11 +100,29 @@ status_t getPixelFormatInfo(PixelFormat format, PixelFormatInfo* info)
+     // YUV format from the HAL are handled here
+     switch (format) {
+     case HAL_PIXEL_FORMAT_YCbCr_422_SP:
++#ifdef STE_HARDWARE
++    case HAL_PIXEL_FORMAT_YCrCb_422_SP:
++    case HAL_PIXEL_FORMAT_YCbCr_422_P:
++#endif
+     case HAL_PIXEL_FORMAT_YCbCr_422_I:
++#ifdef STE_HARDWARE
++    case HAL_PIXEL_FORMAT_CbYCrY_422_I:
++#endif
+         info->bitsPerPixel = 16;
+         goto done;
++#ifdef STE_HARDWARE
++    case HAL_PIXEL_FORMAT_YCbCr_420_SP:
++#endif
+     case HAL_PIXEL_FORMAT_YCrCb_420_SP:
+     case HAL_PIXEL_FORMAT_YV12:
++#ifdef STE_HARDWARE
++    case HAL_PIXEL_FORMAT_YCbCr_420_SP_TILED:
++    case HAL_PIXEL_FORMAT_YCrCb_420_SP_TILED:
++    case HAL_PIXEL_FORMAT_YCbCr_420_P:
++    case HAL_PIXEL_FORMAT_YCbCr_420_I:
++    case HAL_PIXEL_FORMAT_CbYCrY_420_I:
++    case HAL_PIXEL_FORMAT_YCBCR42XMBN:
++#endif
+         info->bitsPerPixel = 12;
+      done:
+         info->format = format;
 diff --git a/frameworks/native/opengl/include/EGL/eglext.h b/frameworks/native/opengl/include/EGL/eglext.h
 index 6c505ed..8e100ad 100644
 --- a/frameworks/native/opengl/include/EGL/eglext.h
