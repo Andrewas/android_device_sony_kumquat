@@ -23,6 +23,7 @@
 #       modified:   media/libstagefright/SurfaceMediaSource.cpp
 #       modified:   media/libstagefright/colorconversion/ColorConverter.cpp
 #       modified:   media/libstagefright/omx/SoftOMXPlugin.cpp
+#       modified:   services/audioflinger/Android.mk
 #       modified:   services/audioflinger/AudioFlinger.cpp
 #       modified:   services/audioflinger/AudioFlinger.h
 #       modified:   services/audioflinger/AudioPolicyService.cpp
@@ -31,10 +32,23 @@
 #       modified:   services/audioflinger/Threads.cpp
 #       modified:   services/audioflinger/Threads.h
 diff --git a/frameworks/av/camera/CameraParameters.cpp b/frameworks/av/camera/CameraParameters.cpp
-index 42b2334..54fabbb 100644
+index d661a85..6cff407 100644
 --- a/frameworks/av/camera/CameraParameters.cpp
 +++ b/frameworks/av/camera/CameraParameters.cpp
-@@ -354,8 +354,18 @@ const char CameraParameters::PIXEL_FORMAT_YUV420SP[] = "yuv420sp";
+@@ -329,6 +329,12 @@ const char CameraParameters::SCENE_MODE_FIREWORKS[] = "fireworks";
+ const char CameraParameters::SCENE_MODE_SPORTS[] = "sports";
+ const char CameraParameters::SCENE_MODE_PARTY[] = "party";
+ const char CameraParameters::SCENE_MODE_CANDLELIGHT[] = "candlelight";
++#ifdef STE_HARDWARE
++const char CameraParameters::SCENE_MODE_BACKLIGHT[] = "backlight";
++const char CameraParameters::SCENE_MODE_DUSKDAWN[] = "duskdawn";
++const char CameraParameters::SCENE_MODE_FALLCOLOR[] = "fallcolor";
++const char CameraParameters::SCENE_MODE_TEXT[] = "text";
++#endif
+ #ifdef QCOM_HARDWARE
+ #ifdef SAMSUNG_CAMERA_LEGACY
+ const char CameraParameters::SCENE_MODE_BACKLIGHT[] = "back-light";
+@@ -355,8 +361,18 @@ const char CameraParameters::PIXEL_FORMAT_YUV420SP[] = "yuv420sp";
  #ifdef QCOM_HARDWARE
  const char CameraParameters::PIXEL_FORMAT_YUV420SP_ADRENO[] = "yuv420sp-adreno";
  #endif
@@ -53,7 +67,31 @@ index 42b2334..54fabbb 100644
  const char CameraParameters::PIXEL_FORMAT_RGB565[] = "rgb565";
  const char CameraParameters::PIXEL_FORMAT_RGBA8888[] = "rgba8888";
  const char CameraParameters::PIXEL_FORMAT_JPEG[] = "jpeg";
-@@ -528,6 +538,11 @@ void CameraParameters::setOrientation(int orientation)
+@@ -512,6 +528,23 @@ const char CameraParameters::SCENE_MODE_FALL_COLOR[] = "fall-color";
+ const char CameraParameters::SCENE_MODE_TEXT[] = "text";
+ #endif
+ 
++#ifdef STE_HARDWARE
++const char CameraParameters::FOCUS_MODE_FACEDETECT[] = "facedetect";
++const char CameraParameters::FOCUS_MODE_TOUCHAF[] = "touchaf";
++const char CameraParameters::ISO_50[] = "ISO50";
++const char CameraParameters::KEY_ANTI_SHAKE_MODE[] = "antishake";
++const char CameraParameters::KEY_AUTO_CONTRAST[] = "auto-contrast";
++const char CameraParameters::KEY_BEAUTY_MODE[] = "beauty";
++const char CameraParameters::KEY_BLUR_MODE[] = "blur";
++const char CameraParameters::KEY_VINTAGE_MODE[] = "vintagemode";
++const char CameraParameters::KEY_WDR_MODE[] = "wdr";
++const char CameraParameters::VINTAGE_MODE_BNW[] = "bnw";
++const char CameraParameters::VINTAGE_MODE_COOL[] = "cool";
++const char CameraParameters::VINTAGE_MODE_NORMAL[] = "normal";
++const char CameraParameters::VINTAGE_MODE_OFF[] = "off";
++const char CameraParameters::VINTAGE_MODE_WARM[] = "warm";
++#endif 
++
+ static const char* portrait = "portrait";
+ static const char* landscape = "landscape";
+ 
+@@ -532,6 +565,11 @@ void CameraParameters::setOrientation(int orientation)
  }
  #endif
  
@@ -66,10 +104,23 @@ index 42b2334..54fabbb 100644
  // Values for light fx settings
  const char CameraParameters::LIGHTFX_LOWLIGHT[] = "low-light";
 diff --git a/frameworks/av/include/camera/CameraParameters.h b/frameworks/av/include/camera/CameraParameters.h
-index 4c08ece..c7a3949 100644
+index 2758989..a0e3239 100644
 --- a/frameworks/av/include/camera/CameraParameters.h
 +++ b/frameworks/av/include/camera/CameraParameters.h
-@@ -850,8 +850,18 @@ public:
+@@ -834,6 +834,12 @@ public:
+     static const char SCENE_MODE_FLOWERS[];
+     static const char SCENE_MODE_AR[];
+ #endif
++#ifdef STE_HARDWARE
++    static const char SCENE_MODE_BACKLIGHT[];
++    static const char SCENE_MODE_DUSKDAWN[];
++    static const char SCENE_MODE_FALLCOLOR[];
++    static const char SCENE_MODE_TEXT[];
++#endif
+     // Applications are looking for a barcode. Camera driver will be optimized
+     // for barcode reading.
+     static const char SCENE_MODE_BARCODE[];
+@@ -853,8 +859,18 @@ public:
  #ifdef QCOM_HARDWARE
      static const char PIXEL_FORMAT_YUV420SP_ADRENO[]; // ADRENO
  #endif
@@ -88,7 +139,35 @@ index 4c08ece..c7a3949 100644
      static const char PIXEL_FORMAT_RGB565[];
      static const char PIXEL_FORMAT_RGBA8888[];
      static const char PIXEL_FORMAT_JPEG[];
-@@ -1076,6 +1086,12 @@ public:
+@@ -1062,6 +1078,27 @@ public:
+     static const char SCENE_MODE_TEXT[];
+ #endif
+ 
++#ifdef STE_HARDWARE
++    static const char FOCUS_MODE_FACEDETECT[];
++    static const char FOCUS_MODE_TOUCHAF[];
++    static const char ISO_50[];
++    static const char KEY_ANTI_SHAKE_MODE[];
++    static const char KEY_AUTO_CONTRAST[];
++    static const char KEY_BEAUTY_MODE[];
++    static const char KEY_BLUR_MODE[];
++    static const char KEY_VINTAGE_MODE[];
++    static const char KEY_WDR_MODE[];
++    static const char VINTAGE_MODE_BNW[];
++    static const char VINTAGE_MODE_COOL[];
++    static const char VINTAGE_MODE_NORMAL[];
++    static const char VINTAGE_MODE_OFF[];
++    static const char VINTAGE_MODE_WARM[];
++    static const char SCENE_MODE_DUSKDAWN[];
++    static const char SCENE_MODE_FALL[];
++    static const char SCENE_MODE_FALL_COLOR[];
++    static const char SCENE_MODE_TEXT[];
++#endif
++
+    // Values for Redeye Reduction settings.
+    // static const char REDEYE_REDUCTION_ENABLE[];
+    // static const char REDEYE_REDUCTION_DISABLE[];
+@@ -1083,6 +1120,12 @@ public:
      void getSupportedHfrSizes(Vector<Size> &sizes) const;
  #endif
  
@@ -138,7 +217,7 @@ index 6a2aec1..fca1863 100644
  
  }; // namespace android
 diff --git a/frameworks/av/include/media/AudioSystem.h b/frameworks/av/include/media/AudioSystem.h
-index ad0dbe1..b5eea30 100644
+index 6c04a48..53a25e9 100644
 --- a/frameworks/av/include/media/AudioSystem.h
 +++ b/frameworks/av/include/media/AudioSystem.h
 @@ -32,6 +32,9 @@
@@ -151,7 +230,7 @@ index ad0dbe1..b5eea30 100644
  
  class IAudioPolicyService;
  class String8;
-@@ -140,6 +143,11 @@ public:
+@@ -143,6 +146,11 @@ public:
      static void acquireAudioSessionId(int audioSession);
      static void releaseAudioSessionId(int audioSession);
  
@@ -163,7 +242,7 @@ index ad0dbe1..b5eea30 100644
      // types of io configuration change events received with ioConfigChanged()
      enum io_config_event {
          OUTPUT_OPENED,
-@@ -153,6 +161,9 @@ public:
+@@ -156,6 +164,9 @@ public:
          A2DP_OUTPUT_STATE,
          EFFECT_CONFIG_CHANGED,
  #endif
@@ -173,7 +252,7 @@ index ad0dbe1..b5eea30 100644
          NUM_CONFIG_EVENTS
      };
  
-@@ -215,7 +226,13 @@ public:
+@@ -218,7 +229,13 @@ public:
                                      uint32_t samplingRate = 0,
                                      audio_format_t format = AUDIO_FORMAT_DEFAULT,
                                      audio_channel_mask_t channelMask = AUDIO_CHANNEL_IN_MONO,
@@ -187,7 +266,7 @@ index ad0dbe1..b5eea30 100644
      static status_t startInput(audio_io_handle_t input);
      static status_t stopInput(audio_io_handle_t input);
      static void releaseInput(audio_io_handle_t input);
-@@ -281,6 +298,14 @@ private:
+@@ -284,6 +301,14 @@ private:
          virtual void binderDied(const wp<IBinder>& who);
      };
  
@@ -202,7 +281,7 @@ index ad0dbe1..b5eea30 100644
      static sp<AudioFlingerClient> gAudioFlingerClient;
      static sp<AudioPolicyServiceClient> gAudioPolicyServiceClient;
      friend class AudioFlingerClient;
-@@ -303,6 +328,12 @@ private:
+@@ -306,6 +331,12 @@ private:
      // list of output descriptors containing cached parameters
      // (sampling rate, framecount, channel count...)
      static DefaultKeyedVector<audio_io_handle_t, OutputDescriptor *> gOutputs;
@@ -253,7 +332,7 @@ index 9f8446b..ffef742 100644
  
  class TimedAudioTrack : public AudioTrack
 diff --git a/frameworks/av/include/media/IAudioFlinger.h b/frameworks/av/include/media/IAudioFlinger.h
-index 56dff25..c29b1f7 100644
+index 2ad1eeb..380e4b9 100644
 --- a/frameworks/av/include/media/IAudioFlinger.h
 +++ b/frameworks/av/include/media/IAudioFlinger.h
 @@ -165,12 +165,26 @@ public:
@@ -509,7 +588,7 @@ index 9c6252a..1fcbbc6 100644
      return mInput;
  }
 diff --git a/frameworks/av/media/libmedia/AudioSystem.cpp b/frameworks/av/media/libmedia/AudioSystem.cpp
-index d950450..45f9a14 100644
+index 5c8c1fe..819a34e 100644
 --- a/frameworks/av/media/libmedia/AudioSystem.cpp
 +++ b/frameworks/av/media/libmedia/AudioSystem.cpp
 @@ -44,6 +44,12 @@ audio_format_t AudioSystem::gPrevInFormat = AUDIO_FORMAT_PCM_16_BIT;
@@ -525,9 +604,9 @@ index d950450..45f9a14 100644
  
  // establish binder interface to AudioFlinger service
  const sp<IAudioFlinger>& AudioSystem::get_audio_flinger()
-@@ -404,9 +410,36 @@ void AudioSystem::releaseAudioSessionId(int audioSession) {
-     }
+@@ -413,9 +419,36 @@ status_t AudioSystem::setFmVolume(float value)
  }
+ #endif
  
 +#ifdef STE_AUDIO
 +int AudioSystem::registerLatencyNotificationClient(latency_update_callback cb,
@@ -562,7 +641,7 @@ index d950450..45f9a14 100644
      Mutex::Autolock _l(AudioSystem::gLock);
  
      AudioSystem::gAudioFlinger.clear();
-@@ -475,6 +508,22 @@ void AudioSystem::AudioFlingerClient::ioConfigChanged(int event, audio_io_handle
+@@ -484,6 +517,22 @@ void AudioSystem::AudioFlingerClient::ioConfigChanged(int event, audio_io_handle
          outputDesc =  new OutputDescriptor(*desc);
          gOutputs.replaceValueFor(ioHandle, outputDesc);
      } break;
@@ -585,7 +664,7 @@ index d950450..45f9a14 100644
      case INPUT_OPENED:
      case INPUT_CLOSED:
      case INPUT_CONFIG_CHANGED:
-@@ -635,11 +684,21 @@ audio_io_handle_t AudioSystem::getInput(audio_source_t inputSource,
+@@ -644,11 +693,21 @@ audio_io_handle_t AudioSystem::getInput(audio_source_t inputSource,
                                      uint32_t samplingRate,
                                      audio_format_t format,
                                      audio_channel_mask_t channelMask,
@@ -608,19 +687,19 @@ index d950450..45f9a14 100644
  
  status_t AudioSystem::startInput(audio_io_handle_t input)
 diff --git a/frameworks/av/media/libmedia/AudioTrack.cpp b/frameworks/av/media/libmedia/AudioTrack.cpp
-index 8d066ac..622d69d 100644
+index 8d066ac..ea75491 100644
 --- a/frameworks/av/media/libmedia/AudioTrack.cpp
 +++ b/frameworks/av/media/libmedia/AudioTrack.cpp
-@@ -179,6 +179,9 @@ AudioTrack::~AudioTrack()
-     ALOGV_IF(mSharedBuffer != 0, "Destructor sharedBuffer: %p", mSharedBuffer->pointer());
- 
-     if (mStatus == NO_ERROR) {
+@@ -204,6 +204,9 @@ AudioTrack::~AudioTrack()
+         AudioSystem::releaseAudioSessionId(mSessionId);
+ #endif
+     }
 +#ifdef STE_AUDIO
 +        AudioSystem::unregisterLatencyNotificationClient(mLatencyClientId);
 +#endif
-         // Make sure that callback function exits in the case where
-         // it is looping on buffer full condition in obtainBuffer().
-         // Otherwise the callback thread will never exit.
+     delete mProxy;
+ }
+ 
 @@ -420,6 +423,7 @@ status_t AudioTrack::set(
  #ifndef QCOM_HARDWARE
      AudioSystem::acquireAudioSessionId(mSessionId);
@@ -658,7 +737,7 @@ index 8d066ac..622d69d 100644
  
  AudioTrack::AudioTrackThread::AudioTrackThread(AudioTrack& receiver, bool bCanCallJava)
 diff --git a/frameworks/av/media/libmedia/IAudioFlinger.cpp b/frameworks/av/media/libmedia/IAudioFlinger.cpp
-index 08942f1..916cf52 100644
+index f9d6ed7..2af2683 100644
 --- a/frameworks/av/media/libmedia/IAudioFlinger.cpp
 +++ b/frameworks/av/media/libmedia/IAudioFlinger.cpp
 @@ -58,6 +58,10 @@ enum {
@@ -672,7 +751,7 @@ index 08942f1..916cf52 100644
      OPEN_INPUT,
      CLOSE_INPUT,
      SET_STREAM_OUTPUT,
-@@ -78,6 +82,9 @@ enum {
+@@ -81,6 +85,9 @@ enum {
  #ifdef QCOM_HARDWARE
      CREATE_DIRECT_TRACK,
  #endif
@@ -682,7 +761,7 @@ index 08942f1..916cf52 100644
  };
  
  class BpAudioFlinger : public BpInterface<IAudioFlinger>
-@@ -480,11 +487,36 @@ public:
+@@ -483,11 +490,36 @@ public:
          return reply.readInt32();
      }
  
@@ -719,7 +798,7 @@ index 08942f1..916cf52 100644
      {
          Parcel data, reply;
          audio_devices_t devices = pDevices ? *pDevices : (audio_devices_t)0;
-@@ -498,6 +530,9 @@ public:
+@@ -501,6 +533,9 @@ public:
          data.writeInt32(samplingRate);
          data.writeInt32(format);
          data.writeInt32(channelMask);
@@ -729,7 +808,7 @@ index 08942f1..916cf52 100644
          remote()->transact(OPEN_INPUT, data, &reply);
          audio_io_handle_t input = (audio_io_handle_t) reply.readInt32();
          devices = (audio_devices_t)reply.readInt32();
-@@ -511,7 +546,11 @@ public:
+@@ -514,7 +549,11 @@ public:
          return input;
      }
  
@@ -741,7 +820,7 @@ index 08942f1..916cf52 100644
      {
          Parcel data, reply;
          data.writeInterfaceToken(IAudioFlinger::getInterfaceDescriptor());
-@@ -569,6 +608,22 @@ public:
+@@ -572,6 +611,22 @@ public:
          return reply.readInt32();
      }
  
@@ -764,7 +843,7 @@ index 08942f1..916cf52 100644
      virtual int newAudioSessionId()
      {
          Parcel data, reply;
-@@ -974,6 +1029,20 @@ status_t BnAudioFlinger::onTransact(
+@@ -988,6 +1043,20 @@ status_t BnAudioFlinger::onTransact(
              reply->writeInt32(restoreOutput((audio_io_handle_t) data.readInt32()));
              return NO_ERROR;
          } break;
@@ -785,7 +864,7 @@ index 08942f1..916cf52 100644
          case OPEN_INPUT: {
              CHECK_INTERFACE(IAudioFlinger, data, reply);
              audio_module_handle_t module = (audio_module_handle_t)data.readInt32();
-@@ -981,12 +1050,20 @@ status_t BnAudioFlinger::onTransact(
+@@ -995,12 +1064,20 @@ status_t BnAudioFlinger::onTransact(
              uint32_t samplingRate = data.readInt32();
              audio_format_t format = (audio_format_t) data.readInt32();
              audio_channel_mask_t channelMask = (audio_channel_mask_t)data.readInt32();
@@ -806,7 +885,7 @@ index 08942f1..916cf52 100644
              reply->writeInt32((int32_t) input);
              reply->writeInt32(devices);
              reply->writeInt32(samplingRate);
-@@ -996,7 +1073,13 @@ status_t BnAudioFlinger::onTransact(
+@@ -1010,7 +1087,13 @@ status_t BnAudioFlinger::onTransact(
          } break;
          case CLOSE_INPUT: {
              CHECK_INTERFACE(IAudioFlinger, data, reply);
@@ -820,7 +899,7 @@ index 08942f1..916cf52 100644
              return NO_ERROR;
          } break;
          case SET_STREAM_OUTPUT: {
-@@ -1124,6 +1207,18 @@ status_t BnAudioFlinger::onTransact(
+@@ -1146,6 +1229,18 @@ status_t BnAudioFlinger::onTransact(
              reply->writeInt32(getPrimaryOutputFrameCount());
              return NO_ERROR;
          } break;
@@ -889,7 +968,7 @@ index 386c351..54daaf4 100644
              return NO_ERROR;
          } break;
 diff --git a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/libstagefright/ACodec.cpp
-index ca21a4d..40eb749 100644
+index ca21a4d..08100a8 100644
 --- a/frameworks/av/media/libstagefright/ACodec.cpp
 +++ b/frameworks/av/media/libstagefright/ACodec.cpp
 @@ -567,8 +567,12 @@ status_t ACodec::allocateOutputBuffersFromNativeWindow() {
@@ -905,8 +984,29 @@ index ca21a4d..40eb749 100644
  
      if (err != 0) {
          ALOGE("native_window_set_buffers_geometry failed: %s (%d)",
+@@ -1507,6 +1511,20 @@ status_t ACodec::setSupportedOutputFormat() {
+     CHECK_EQ(err, (status_t)OK);
+     CHECK_EQ((int)format.eCompressionFormat, (int)OMX_VIDEO_CodingUnused);
+ 
++    CHECK(format.eColorFormat == OMX_COLOR_FormatYUV420Planar
++           || format.eColorFormat == OMX_COLOR_FormatYUV420SemiPlanar
++           || format.eColorFormat == OMX_COLOR_FormatCbYCrY
++           || format.eColorFormat == OMX_TI_COLOR_FormatYUV420PackedSemiPlanar
++           || format.eColorFormat == OMX_QCOM_COLOR_FormatYVU420SemiPlanar
++#ifdef QCOM_HARDWARE
++           || format.eColorFormat == OMX_QCOM_COLOR_FormatYVU420PackedSemiPlanar32m4ka
++           || format.eColorFormat == OMX_QCOM_COLOR_FormatYUV420PackedSemiPlanar64x32Tile2m8ka
++#endif
++#ifdef STE_HARDWARE
++           || format.eColorFormat == OMX_STE_COLOR_FormatYUV420PackedSemiPlanarMB
++#endif
++         );
++
+     return mOMX->setParameter(
+             mNode, OMX_IndexParamVideoPortFormat,
+             &format, sizeof(format));
 diff --git a/frameworks/av/media/libstagefright/CameraSource.cpp b/frameworks/av/media/libstagefright/CameraSource.cpp
-index c9034e4..94c2578 100644
+index ce045d7..8c01ac2 100644
 --- a/frameworks/av/media/libstagefright/CameraSource.cpp
 +++ b/frameworks/av/media/libstagefright/CameraSource.cpp
 @@ -120,10 +120,16 @@ static int32_t getColorFormat(const char* colorFormat) {
@@ -927,7 +1027,7 @@ index c9034e4..94c2578 100644
  
      ALOGE("Uknown color format (%s), please add it to "
           "CameraSource::getColorFormat", colorFormat);
-@@ -565,13 +571,22 @@ status_t CameraSource::initWithCameraAccess(
+@@ -569,13 +575,22 @@ status_t CameraSource::initWithCameraAccess(
  
      // XXX: query camera for the stride and slice height
      // when the capability becomes available.
@@ -970,10 +1070,83 @@ index 5d8029c..4b444af 100644
  const char *MEDIA_MIMETYPE_AUDIO_AMR_NB = "audio/3gpp";
  const char *MEDIA_MIMETYPE_AUDIO_AMR_WB = "audio/amr-wb";
 diff --git a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media/libstagefright/OMXCodec.cpp
-index ed684cd..5e344da 100644
+index 2aedd0f..1505a5f 100644
 --- a/frameworks/av/media/libstagefright/OMXCodec.cpp
 +++ b/frameworks/av/media/libstagefright/OMXCodec.cpp
-@@ -308,6 +308,20 @@ void OMXCodec::findMatchingCodecs(
+@@ -266,6 +266,72 @@ void OMXCodec::findMatchingCodecs(
+         return;
+     }
+ #endif
++#ifdef STE_HARDWARE
++    if (matchComponentName && !strcmp("OMX.ST.mp3.decoder", matchComponentName)) {
++        matchingCodecs->add();
++
++        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
++        entry->mName = String8("OMX.ST.mp3.decoder");
++        entry->mQuirks = 0;
++        return;
++    } else if (matchComponentName && !strcmp("OMX.ST.aac.decoder", matchComponentName)) {
++        matchingCodecs->add();
++
++        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
++        entry->mName = String8("OMX.ST.aac.decoder");
++        entry->mQuirks = 0;
++        return;
++    } else if (matchComponentName && !strcmp("OMX.ST.VFM.MPEG4Dec", matchComponentName)) {
++        matchingCodecs->add();
++
++        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
++        entry->mName = String8("OMX.ST.VFM.MPEG4Dec");
++        entry->mQuirks = 0;
++        return;
++    } else if (matchComponentName && !strcmp("OMX.ST.VFM.MPEG4Dec", matchComponentName)) {
++        matchingCodecs->add();
++
++        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
++        entry->mName = String8("OMX.ST.VFM.MPEG4Dec");
++        entry->mQuirks = 0;
++        return;
++    } else if (matchComponentName && !strcmp("OMX.ST.VFM.MPEG4HostDec", matchComponentName)) {
++        matchingCodecs->add();
++
++        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
++        entry->mName = String8("OMX.ST.VFM.MPEG4HostDec");
++        entry->mQuirks = 0;
++        return;
++    } else if (matchComponentName && !strcmp("OMX.ST.VFM.VC1Dec", matchComponentName)) {
++        matchingCodecs->add();
++
++        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
++        entry->mName = String8("OMX.ST.VFM.VC1Dec");
++        entry->mQuirks = 0;
++        return;
++    } else if (matchComponentName && !strcmp("OMX.ST.VFM.MPEG4Enc", matchComponentName)) {
++        matchingCodecs->add();
++
++        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
++        entry->mName = String8("OMX.ST.VFM.MPEG4Enc");
++        entry->mQuirks = 0;
++        return;
++    } else if (matchComponentName && !strcmp("OMX.ST.VFM.MPEG4Enc", matchComponentName)) {
++        matchingCodecs->add();
++
++        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
++        entry->mName = String8("OMX.ST.VFM.MPEG4Enc");
++        entry->mQuirks = 0;
++        return;
++    } else if (matchComponentName && !strcmp("OMX.ST.VFM.H264Enc", matchComponentName)) {
++        matchingCodecs->add();
++
++        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
++        entry->mName = String8("OMX.ST.VFM.H264Enc");
++        entry->mQuirks = 0;
++        return;
++    }
++#endif
+ 
+     for (;;) {
+         ssize_t matchIndex =
+@@ -308,6 +374,20 @@ void OMXCodec::findMatchingCodecs(
      }
  }
  
@@ -994,7 +1167,7 @@ index ed684cd..5e344da 100644
  // static
  uint32_t OMXCodec::getComponentQuirks(
          const MediaCodecList *list, size_t index) {
-@@ -342,6 +356,12 @@ uint32_t OMXCodec::getComponentQuirks(
+@@ -359,6 +439,12 @@ uint32_t OMXCodec::getComponentQuirks(
                  index, "requires-loaded-to-idle-after-allocation")) {
          quirks |= kRequiresLoadedToIdleAfterAllocation;
      }
@@ -1007,7 +1180,42 @@ index ed684cd..5e344da 100644
  #ifdef QCOM_HARDWARE
      if (list->codecHasQuirk(
                  index, "requires-global-flush")) {
-@@ -917,6 +937,9 @@ static size_t getFrameSize(
+@@ -391,6 +477,34 @@ bool OMXCodec::findCodecQuirks(const char *componentName, uint32_t *quirks) {
+     }
+ #endif
+ 
++#ifdef STE_HARDWARE
++    if (componentName && !strcmp("OMX.ST.aac.decoder", componentName)) {
++        *quirks = 0;
++        return true;
++    } else if (componentName && !strcmp("OMX.ST.VFM.MPEG4Dec", componentName)) {
++        *quirks = 0;
++        return true;
++    } else if (componentName && !strcmp("OMX.ST.VFM.MPEG4Dec", componentName)) {
++        *quirks = 0;
++        return true;
++    } else if (componentName && !strcmp("OMX.ST.VFM.MPEG4HostDec", componentName)) {
++        *quirks = 0;
++        return true;
++    } else if (componentName && !strcmp("OMX.ST.VFM.VC1Dec", componentName)) {
++        *quirks = 0;
++        return true;
++    } else if (componentName && !strcmp("OMX.ST.VFM.MPEG4Enc", componentName)) {
++        *quirks = 0;
++        return true;
++    } else if (componentName && !strcmp("OMX.ST.VFM.MPEG4Enc", componentName)) {
++        *quirks = 0;
++        return true;
++    } else if (componentName && !strcmp("OMX.ST.VFM.H264Enc", componentName)) {
++        *quirks = 0;
++        return true;
++    }
++#endif
++
+     ssize_t index = list->findCodecByName(componentName);
+ 
+     if (index < 0) {
+@@ -934,6 +1048,9 @@ static size_t getFrameSize(
          case OMX_COLOR_FormatYUV420Planar:
          case OMX_COLOR_FormatYUV420SemiPlanar:
          case OMX_TI_COLOR_FormatYUV420PackedSemiPlanar:
@@ -1017,7 +1225,16 @@ index ed684cd..5e344da 100644
          /*
          * FIXME: For the Opaque color format, the frame size does not
          * need to be (w*h*3)/2. It just needs to
-@@ -1502,6 +1525,9 @@ status_t OMXCodec::setVideoOutputFormat(
+@@ -1508,7 +1625,7 @@ status_t OMXCodec::setVideoOutputFormat(
+         CHECK_EQ(err, (status_t)OK);
+         CHECK_EQ((int)format.eCompressionFormat, (int)OMX_VIDEO_CodingUnused);
+ 
+-#if 0
++//#if 0
+         CHECK(format.eColorFormat == OMX_COLOR_FormatYUV420Planar
+                || format.eColorFormat == OMX_COLOR_FormatYUV420SemiPlanar
+                || format.eColorFormat == OMX_COLOR_FormatCbYCrY
+@@ -1519,6 +1636,9 @@ status_t OMXCodec::setVideoOutputFormat(
                 || format.eColorFormat == OMX_SEC_COLOR_FormatNV12TPhysicalAddress
                 || format.eColorFormat == OMX_SEC_COLOR_FormatNV12Tiled
  #endif
@@ -1027,7 +1244,16 @@ index ed684cd..5e344da 100644
                 );
  
  #ifdef USE_SAMSUNG_COLORFORMAT
-@@ -1700,6 +1726,10 @@ void OMXCodec::setComponentRole(
+@@ -1530,7 +1650,7 @@ status_t OMXCodec::setVideoOutputFormat(
+         }
+ #endif
+ 
+-#endif
++//#endif
+ 
+         int32_t colorFormat;
+         if (meta->findInt32(kKeyColorFormat, &colorFormat)
+@@ -1717,6 +1837,10 @@ void OMXCodec::setComponentRole(
              "video_decoder.mpeg4", "video_encoder.mpeg4" },
          { MEDIA_MIMETYPE_VIDEO_H263,
              "video_decoder.h263", "video_encoder.h263" },
@@ -1038,7 +1264,7 @@ index ed684cd..5e344da 100644
          { MEDIA_MIMETYPE_VIDEO_VPX,
              "video_decoder.vpx", "video_encoder.vpx" },
          { MEDIA_MIMETYPE_AUDIO_RAW,
-@@ -1792,6 +1822,16 @@ status_t OMXCodec::init() {
+@@ -1809,6 +1933,16 @@ status_t OMXCodec::init() {
      CHECK_EQ((int)mState, (int)LOADED);
  
      status_t err;
@@ -1055,7 +1281,7 @@ index ed684cd..5e344da 100644
      if (!(mQuirks & kRequiresLoadedToIdleAfterAllocation)) {
          err = mOMX->sendCommand(mNode, OMX_CommandStateSet, OMX_StateIdle);
          CHECK_EQ(err, (status_t)OK);
-@@ -1858,7 +1898,12 @@ status_t OMXCodec::allocateBuffersOnPort(OMX_U32 portIndex) {
+@@ -1875,7 +2009,12 @@ status_t OMXCodec::allocateBuffersOnPort(OMX_U32 portIndex) {
      }
  
      status_t err = OK;
@@ -1068,7 +1294,7 @@ index ed684cd..5e344da 100644
              && portIndex == kPortIndexInput) {
          err = mOMX->storeMetaDataInBuffers(mNode, kPortIndexInput, OMX_TRUE);
          if (err != OK) {
-@@ -2058,7 +2103,11 @@ status_t OMXCodec::allocateOutputBuffersFromNativeWindow() {
+@@ -2075,7 +2214,11 @@ status_t OMXCodec::allocateOutputBuffersFromNativeWindow() {
              mNativeWindow.get(),
              def.format.video.nFrameWidth,
              def.format.video.nFrameHeight,
@@ -1080,6 +1306,16 @@ index ed684cd..5e344da 100644
  #else
      OMX_COLOR_FORMATTYPE eColorFormat;
  
+@@ -4785,6 +4928,9 @@ static const char *videoCompressionFormatString(OMX_VIDEO_CODINGTYPE type) {
+         "OMX_VIDEO_CodingRV",
+         "OMX_VIDEO_CodingAVC",
+         "OMX_VIDEO_CodingMJPEG",
++#ifdef STE_HARDWARE
++        "OMX_VIDEO_CodingVC1",
++#endif
+     };
+ 
+     size_t numNames = sizeof(kNames) / sizeof(kNames[0]);
 diff --git a/frameworks/av/media/libstagefright/SurfaceMediaSource.cpp b/frameworks/av/media/libstagefright/SurfaceMediaSource.cpp
 index 409038a..2c833c1 100644
 --- a/frameworks/av/media/libstagefright/SurfaceMediaSource.cpp
@@ -1293,19 +1529,25 @@ index b3fe98e..1806547 100644
      { "OMX.google.mp3.decoder", "mp3dec", "audio_decoder.mp3" },
      { "OMX.google.vorbis.decoder", "vorbisdec", "audio_decoder.vorbis" },
      { "OMX.google.vpx.decoder", "vpxdec", "video_decoder.vpx" },
+diff --git a/frameworks/av/services/audioflinger/Android.mk b/frameworks/av/services/audioflinger/Android.mk
+index 7fc9872..5a82ea0 100644
+--- a/frameworks/av/services/audioflinger/Android.mk
++++ b/frameworks/av/services/audioflinger/Android.mk
+@@ -13,6 +13,10 @@ include $(BUILD_STATIC_LIBRARY)
+ 
+ include $(CLEAR_VARS)
+ 
++ifeq ($(BOARD_USES_STE_HARDWARE),true)
++LOCAL_CFLAGS += -DSTE_AUDIO
++LOCAL_CFLAGS += -Wno-conversion -fpermissive
++endif
+ LOCAL_SRC_FILES:=               \
+     AudioFlinger.cpp            \
+     Threads.cpp                 \
 diff --git a/frameworks/av/services/audioflinger/AudioFlinger.cpp b/frameworks/av/services/audioflinger/AudioFlinger.cpp
-index 84e2498..5867c70 100644
+index 3683f2c..d83e56b 100644
 --- a/frameworks/av/services/audioflinger/AudioFlinger.cpp
 +++ b/frameworks/av/services/audioflinger/AudioFlinger.cpp
-@@ -79,7 +79,7 @@
- // are so verbose that we want to suppress them even when we have ALOG_ASSERT
- // turned on.  Do not uncomment the #def below unless you really know what you
- // are doing and want to see all of the extremely verbose messages.
--//#define VERY_VERY_VERBOSE_LOGGING
-+#define VERY_VERY_VERBOSE_LOGGING
- #ifdef VERY_VERY_VERBOSE_LOGGING
- #define ALOGVV ALOGV
- #else
 @@ -1235,6 +1235,20 @@ unsigned int AudioFlinger::getInputFramesLost(audio_io_handle_t ioHandle) const
      return 0;
  }
@@ -1327,7 +1569,7 @@ index 84e2498..5867c70 100644
  status_t AudioFlinger::setVoiceVolume(float value)
  {
      status_t ret = initCheck();
-@@ -1840,7 +1854,11 @@ audio_io_handle_t AudioFlinger::openOutput(audio_module_handle_t module,
+@@ -1863,7 +1877,11 @@ audio_io_handle_t AudioFlinger::openOutput(audio_module_handle_t module,
  #endif
  
          // the first primary output opened designates the primary hw device
@@ -1339,7 +1581,7 @@ index 84e2498..5867c70 100644
              ALOGI("Using module %d has the primary audio interface", module);
              mPrimaryHardwareDev = outHwDev;
  #ifdef SRS_PROCESSING
-@@ -1980,11 +1998,50 @@ status_t AudioFlinger::restoreOutput(audio_io_handle_t output)
+@@ -2003,11 +2021,50 @@ status_t AudioFlinger::restoreOutput(audio_io_handle_t output)
      return NO_ERROR;
  }
  
@@ -1390,7 +1632,7 @@ index 84e2498..5867c70 100644
  {
      status_t status;
      RecordThread *thread = NULL;
-@@ -1998,6 +2055,10 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
+@@ -2021,6 +2078,10 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
      audio_channel_mask_t reqChannels = config.channel_mask;
      audio_stream_in_t *inStream = NULL;
      AudioHwDevice *inHwDev;
@@ -1401,7 +1643,7 @@ index 84e2498..5867c70 100644
  
      if (pDevices == NULL || *pDevices == 0) {
          return 0;
-@@ -2009,6 +2070,12 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
+@@ -2032,6 +2093,12 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
      if (inHwDev == NULL)
          return 0;
  
@@ -1414,7 +1656,24 @@ index 84e2498..5867c70 100644
      audio_hw_device_t *inHwHal = inHwDev->hwDevice();
      audio_io_handle_t id = nextUniqueId();
  
-@@ -2033,7 +2100,14 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
+@@ -2047,16 +2114,31 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
+ #endif
+     ALOGV("openInput() openInputStream returned input %p, SamplingRate %d, Format %d, Channels %x, "
+             "status %d",
++#ifdef STE_AUDIO
++            pInputClientId=%p",
++#endif
+             inStream,
+             config.sample_rate,
+             config.format,
+             config.channel_mask,
++#ifdef STE_AUDIO
++            status,
++            pInputClientId);
++#else
+             status);
++#endif
+ 
      // If the input could not be opened with the requested parameters and we can handle the
      // conversion internally, try to open again with the proposed parameters. The AudioFlinger can
      // resample the input and do mono to stereo or stereo to mono conversions on 16 bit PCM inputs.
@@ -1430,21 +1689,12 @@ index 84e2498..5867c70 100644
          reqFormat == config.format && config.format == AUDIO_FORMAT_PCM_16_BIT &&
          (config.sample_rate <= 2 * reqSamplingRate) &&
          (getInputChannelCount(config.channel_mask) <= FCC_2) && (getInputChannelCount(reqChannels) <= FCC_2)) {
-@@ -2106,13 +2180,21 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
-         // Start record thread
-         // RecorThread require both input and output device indication to forward to audio
-         // pre processing modules
-+#ifdef STE_AUDIO
-+        audio_devices_t device = (*pDevices) | primaryOutputDevice_l();
-+#endif
-         thread = new RecordThread(this,
-                                   input,
-                                   reqSamplingRate,
+@@ -2135,7 +2217,12 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
                                    reqChannels,
                                    id,
                                    primaryOutputDevice_l(),
 +#ifdef STE_AUDIO
-+                                  device,
++                                  *pDevices,
 +                                  inputClientId
 +#else
                                    *pDevices
@@ -1452,7 +1702,7 @@ index 84e2498..5867c70 100644
  #ifdef TEE_SINK
                                    , teeSink
  #endif
-@@ -2123,6 +2205,12 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
+@@ -2146,6 +2233,12 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
          if (pFormat != NULL) *pFormat = config.format;
          if (pChannelMask != NULL) *pChannelMask = reqChannels;
  
@@ -1465,7 +1715,7 @@ index 84e2498..5867c70 100644
          // notify client processes of the new input creation
          thread->audioConfigChanged_l(AudioSystem::INPUT_OPENED);
          return id;
-@@ -2131,10 +2219,45 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
+@@ -2154,10 +2247,45 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
      return 0;
  }
  
@@ -1512,7 +1762,7 @@ index 84e2498..5867c70 100644
  status_t AudioFlinger::closeInput_nonvirtual(audio_io_handle_t input)
  {
 diff --git a/frameworks/av/services/audioflinger/AudioFlinger.h b/frameworks/av/services/audioflinger/AudioFlinger.h
-index 03d20c2..b616845 100644
+index 2fe5e75..053fab3 100644
 --- a/frameworks/av/services/audioflinger/AudioFlinger.h
 +++ b/frameworks/av/services/audioflinger/AudioFlinger.h
 @@ -196,13 +196,32 @@ public:
@@ -1548,7 +1798,7 @@ index 03d20c2..b616845 100644
  
      virtual status_t setStreamOutput(audio_stream_type_t stream, audio_io_handle_t output);
  
-@@ -751,6 +770,9 @@ private:
+@@ -758,6 +777,9 @@ private:
                  int                                 mLPANumChannels;
                  volatile bool                       mAllChainsLocked;
  #endif
@@ -1559,7 +1809,7 @@ index 03d20c2..b616845 100644
                  bool        masterMute_l() const;
                  audio_module_handle_t loadHwModule_l(const char *name);
 diff --git a/frameworks/av/services/audioflinger/AudioPolicyService.cpp b/frameworks/av/services/audioflinger/AudioPolicyService.cpp
-index 399dba5..af71493 100644
+index c59e438..05e61dc 100644
 --- a/frameworks/av/services/audioflinger/AudioPolicyService.cpp
 +++ b/frameworks/av/services/audioflinger/AudioPolicyService.cpp
 @@ -269,7 +269,12 @@ audio_io_handle_t AudioPolicyService::getInput(audio_source_t inputSource,
@@ -1587,7 +1837,7 @@ index 399dba5..af71493 100644
  
      if (input == 0) {
          return input;
-@@ -972,6 +981,14 @@ void AudioPolicyService::AudioCommandThread::insertCommand_l(AudioCommand *comma
+@@ -1025,6 +1034,14 @@ void AudioPolicyService::AudioCommandThread::insertCommand_l(AudioCommand *comma
          for (size_t k = i + 1; k < mAudioCommands.size(); k++) {
              if (mAudioCommands[k] == removedCommands[j]) {
                  ALOGV("suppressing command: %d", mAudioCommands[k]->mCommand);
@@ -1602,7 +1852,7 @@ index 399dba5..af71493 100644
                  mAudioCommands.removeAt(k);
                  break;
              }
-@@ -1451,7 +1468,12 @@ static audio_io_handle_t aps_open_input(void *service,
+@@ -1511,7 +1528,12 @@ static audio_io_handle_t aps_open_input(void *service,
                                          uint32_t *pSamplingRate,
                                          audio_format_t *pFormat,
                                          audio_channel_mask_t *pChannelMask,
@@ -1615,7 +1865,7 @@ index 399dba5..af71493 100644
  {
      sp<IAudioFlinger> af = AudioSystem::get_audio_flinger();
      if (af == 0) {
-@@ -1459,7 +1481,11 @@ static audio_io_handle_t aps_open_input(void *service,
+@@ -1519,7 +1541,11 @@ static audio_io_handle_t aps_open_input(void *service,
          return 0;
      }
  
@@ -1627,7 +1877,7 @@ index 399dba5..af71493 100644
  }
  
  static audio_io_handle_t aps_open_input_on_module(void *service,
-@@ -1467,7 +1493,12 @@ static audio_io_handle_t aps_open_input_on_module(void *service,
+@@ -1527,7 +1553,12 @@ static audio_io_handle_t aps_open_input_on_module(void *service,
                                                    audio_devices_t *pDevices,
                                                    uint32_t *pSamplingRate,
                                                    audio_format_t *pFormat,
@@ -1640,7 +1890,7 @@ index 399dba5..af71493 100644
  {
      sp<IAudioFlinger> af = AudioSystem::get_audio_flinger();
      if (af == 0) {
-@@ -1475,16 +1506,29 @@ static audio_io_handle_t aps_open_input_on_module(void *service,
+@@ -1535,16 +1566,29 @@ static audio_io_handle_t aps_open_input_on_module(void *service,
          return 0;
      }
  
@@ -1671,7 +1921,7 @@ index 399dba5..af71493 100644
  
  static int aps_set_stream_output(void *service, audio_stream_type_t stream,
 diff --git a/frameworks/av/services/audioflinger/AudioPolicyService.h b/frameworks/av/services/audioflinger/AudioPolicyService.h
-index 35cf368..4931d8c 100644
+index 3e01713..6848156 100644
 --- a/frameworks/av/services/audioflinger/AudioPolicyService.h
 +++ b/frameworks/av/services/audioflinger/AudioPolicyService.h
 @@ -78,7 +78,12 @@ public:
@@ -1703,7 +1953,7 @@ index 58f3ddc..cefe37b 100644
      sp<IEffectClient> mEffectClient;    // callback interface for client notifications
      /*const*/ sp<Client> mClient;       // client for shared memory allocation, see disconnect()
 diff --git a/frameworks/av/services/audioflinger/Threads.cpp b/frameworks/av/services/audioflinger/Threads.cpp
-index f4d4bc8..604dc21 100644
+index e18c654..0cf7f39 100644
 --- a/frameworks/av/services/audioflinger/Threads.cpp
 +++ b/frameworks/av/services/audioflinger/Threads.cpp
 @@ -1480,6 +1480,9 @@ void AudioFlinger::PlaybackThread::audioConfigChanged_l(int event, int param) {
@@ -1716,7 +1966,7 @@ index f4d4bc8..604dc21 100644
          param2 = &param;
      case AudioSystem::OUTPUT_CLOSED:
      default:
-@@ -3096,6 +3099,12 @@ bool AudioFlinger::MixerThread::checkForNewParameters_l()
+@@ -3102,6 +3105,12 @@ bool AudioFlinger::MixerThread::checkForNewParameters_l()
              }
          }
  
@@ -1729,7 +1979,7 @@ index f4d4bc8..604dc21 100644
          if (status == NO_ERROR) {
              status = mOutput->stream->common.set_parameters(&mOutput->stream->common,
                                                      keyValuePair.string());
-@@ -3679,7 +3688,12 @@ AudioFlinger::RecordThread::RecordThread(const sp<AudioFlinger>& audioFlinger,
+@@ -3685,7 +3694,12 @@ AudioFlinger::RecordThread::RecordThread(const sp<AudioFlinger>& audioFlinger,
                                           audio_channel_mask_t channelMask,
                                           audio_io_handle_t id,
                                           audio_devices_t outDevice,
@@ -1742,7 +1992,7 @@ index f4d4bc8..604dc21 100644
  #ifdef TEE_SINK
                                           , const sp<NBAIO_Sink>& teeSink
  #endif
-@@ -3696,7 +3710,9 @@ AudioFlinger::RecordThread::RecordThread(const sp<AudioFlinger>& audioFlinger,
+@@ -3702,7 +3716,9 @@ AudioFlinger::RecordThread::RecordThread(const sp<AudioFlinger>& audioFlinger,
  #endif
  {
      snprintf(mName, kNameLength, "AudioIn_%X", id);
@@ -1753,7 +2003,7 @@ index f4d4bc8..604dc21 100644
      readInputParameters();
  
  }
-@@ -4543,6 +4559,12 @@ KeyedVector<int, bool> AudioFlinger::RecordThread::sessionIds() const
+@@ -4549,6 +4565,12 @@ KeyedVector<int, bool> AudioFlinger::RecordThread::sessionIds() const
      return ids;
  }
  
