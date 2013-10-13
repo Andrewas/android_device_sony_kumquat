@@ -128,7 +128,6 @@ PRODUCT_PACKAGES += \
 # libaudioparameter
 PRODUCT_PACKAGES += \
     libaudioparameter
- 
 
 # light package
 PRODUCT_PACKAGES += \
