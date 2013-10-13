@@ -124,6 +124,11 @@ PRODUCT_PACKAGES += \
 # bluedroid a2dp
 PRODUCT_PACKAGES += \
     audio.a2dp.default
+    
+# libaudioparameter
+PRODUCT_PACKAGES += \
+    libaudioparameter
+ 
 
 # light package
 PRODUCT_PACKAGES += \
