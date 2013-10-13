@@ -90,7 +90,7 @@ index 434e12f..55151de 100644
      // only accept input with the exact requested set of parameters
      if (input == 0 ||
 diff --git a/hardware/libhardware_legacy/audio/audio_policy_hal.cpp b/hardware/libhardware_legacy/audio/audio_policy_hal.cpp
-index 0e7f66a..f6c1d61 100644
+index 52c0a24..3181aa4 100644
 --- a/hardware/libhardware_legacy/audio/audio_policy_hal.cpp
 +++ b/hardware/libhardware_legacy/audio/audio_policy_hal.cpp
 @@ -175,11 +175,20 @@ static audio_io_handle_t ap_get_input(struct audio_policy *pol, audio_source_t i
@@ -174,7 +174,7 @@ index 5904af2..fe40839 100644
      };
  
 +#ifdef STE_AUDIO
-+// AUDIO_INPUT_CLIENT_ID_BASE provide a means to refer to client Id´s not explicitly defined in the enum audio_input_clients
++// AUDIO_INPUT_CLIENT_ID_BASE provide a means to refer to client IdÂ´s not explicitly defined in the enum audio_input_clients
 +#define AUDIO_INPUT_CLIENT_ID_BASE AUDIO_INPUT_CLIENT_ID1
 +
 +    enum audio_input_clients {
