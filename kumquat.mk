@@ -140,6 +140,11 @@ PRODUCT_PACKAGES += \
 # libomxil-bellagio
 PRODUCT_PACKAGES += \
     libomxil-bellagio
+    
+# libtinyalsa & audio.usb.default
+PRODUCT_PACKAGES += \
+    libtinyalsa \
+    audio.usb.default
 
 # We have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
