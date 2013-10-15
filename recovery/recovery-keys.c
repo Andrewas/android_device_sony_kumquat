@@ -53,15 +53,15 @@ int vibrate(int timeout_ms) {
     return 0;
 }
 
+extern int __system(const char *command);
+static int buttonlight = 0;
+
 int device_handle_key(int key_code, int visible) {
 
-    extern int __system(const char *command);
-    static int fixup_xperia_usb = 0;
-
-    if (!fixup_xperia_usb) {
+    if (!buttonlight) {
         __system("/sbin/echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/button-backlight/brightness");
 
-        fixup_xperia_usb = 1;
+        buttonlight = 1;
     }
 
     if (visible) {
