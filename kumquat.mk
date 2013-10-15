@@ -117,13 +117,9 @@ PRODUCT_PACKAGES += \
     libasound_module_ctl_bluetooth \
     libasound_module_pcm_bluetooth
 
-# libbt-vendor
+# libaudioparameter
 PRODUCT_PACKAGES += \
-    libbt-vendor
-
-# bluedroid a2dp
-PRODUCT_PACKAGES += \
-    audio.a2dp.default
+    libaudioparameter
 
 # light package
 PRODUCT_PACKAGES += \
@@ -144,6 +140,11 @@ PRODUCT_PACKAGES += \
 # libomxil-bellagio
 PRODUCT_PACKAGES += \
     libomxil-bellagio
+    
+# libtinyalsa & audio.usb.default
+PRODUCT_PACKAGES += \
+    libtinyalsa \
+    audio.usb.default
 
 # We have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
