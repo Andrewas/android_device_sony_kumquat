@@ -14,73 +14,43 @@
  * limitations under the License.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <dirent.h>
-
 #include <linux/input.h>
 
 #include "recovery_ui.h"
 #include "common.h"
 #include "extendedcommands.h"
 
+extern int __system(const char *command);
+static int buttonlight = 0;
 
 int device_toggle_display(volatile char* key_pressed, int key_code) {
     // hold power and press volume-up
     return key_pressed[KEY_POWER] && key_code == KEY_VOLUMEUP;
 }
 
-#define VIBRATOR_TIMEOUT_FILE "/sys/class/timed_output/vibrator/enable"
-#define VIBRATOR_TIME_MS  10
-
-int vibrate(int timeout_ms) {
-    char str[20];
-    int fd;
-    int ret;
-
-    fd = open(VIBRATOR_TIMEOUT_FILE, O_WRONLY);
-    if (fd < 0)
-        return -1;
-
-    ret = snprintf(str, sizeof(str), "%d", timeout_ms);
-    ret = write(fd, str, ret);
-    close(fd);
-
-    if (ret < 0)
-       return -1;
-
-    return 0;
-}
-
-extern int __system(const char *command);
-static int buttonlight = 0;
-
 int device_handle_key(int key_code, int visible) {
 
-    if (!buttonlight) {
-        __system("/sbin/echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/button-backlight/brightness");
-
-        buttonlight = 1;
-    }
-
     if (visible) {
+
+        if (!buttonlight) {
+            __system("/sbin/echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/button-backlight/brightness");
+
+            buttonlight = 1;
+        }
+
         switch (key_code) {
             case KEY_CAPSLOCK:
             case KEY_DOWN:
             case KEY_VOLUMEDOWN:
             case KEY_MENU:
-                vibrate(VIBRATOR_TIME_MS);
                 return HIGHLIGHT_DOWN;
 
             case KEY_LEFTSHIFT:
             case KEY_UP:
             case KEY_VOLUMEUP:
-                vibrate(VIBRATOR_TIME_MS);
                 return HIGHLIGHT_UP;
 
             case KEY_POWER:
-                vibrate(VIBRATOR_TIME_MS);
                 if (ui_get_showing_back_button()) {
                     return SELECT_ITEM;
                 }
@@ -95,22 +65,18 @@ int device_handle_key(int key_code, int visible) {
             case KEY_CAMERA:
             case KEY_F21:
             case KEY_SEND:
-                vibrate(VIBRATOR_TIME_MS);
                 return SELECT_ITEM;
             case KEY_END:
             case KEY_BACKSPACE:
             case KEY_SEARCH:
                 if (ui_get_showing_back_button()) {
-                    vibrate(VIBRATOR_TIME_MS);
                     return SELECT_ITEM;
                 }
                 if (!ui_root_menu) {
-                    vibrate(VIBRATOR_TIME_MS);
                     return GO_BACK;
                 }
             case KEY_BACK:
                 if (!ui_root_menu) {
-                    vibrate(VIBRATOR_TIME_MS);
                     return GO_BACK;
                 }
         }
