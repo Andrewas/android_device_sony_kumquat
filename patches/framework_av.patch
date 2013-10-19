@@ -31,6 +31,7 @@
 #       modified:   services/audioflinger/Effects.h
 #       modified:   services/audioflinger/Threads.cpp
 #       modified:   services/audioflinger/Threads.h
+#       modified:   services/camera/libcameraservice/CameraHardwareInterface.h
 diff --git a/frameworks/av/camera/CameraParameters.cpp b/frameworks/av/camera/CameraParameters.cpp
 index d661a85..6cff407 100644
 --- a/frameworks/av/camera/CameraParameters.cpp
@@ -494,7 +495,7 @@ index 18fcca4..e6be77c 100644
  AudioParameter::AudioParameter(const String8& keyValuePairs)
  {
 diff --git a/frameworks/av/media/libmedia/AudioRecord.cpp b/frameworks/av/media/libmedia/AudioRecord.cpp
-index 9c6252a..1fcbbc6 100644
+index 9a0328a..7917339 100644
 --- a/frameworks/av/media/libmedia/AudioRecord.cpp
 +++ b/frameworks/av/media/libmedia/AudioRecord.cpp
 @@ -82,9 +82,19 @@ status_t AudioRecord::getMinFrameCount(
@@ -1070,83 +1071,19 @@ index 5d8029c..4b444af 100644
  const char *MEDIA_MIMETYPE_AUDIO_AMR_NB = "audio/3gpp";
  const char *MEDIA_MIMETYPE_AUDIO_AMR_WB = "audio/amr-wb";
 diff --git a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media/libstagefright/OMXCodec.cpp
-index 2aedd0f..1505a5f 100644
+index 2aedd0f..e9f741c 100644
 --- a/frameworks/av/media/libstagefright/OMXCodec.cpp
 +++ b/frameworks/av/media/libstagefright/OMXCodec.cpp
-@@ -266,6 +266,72 @@ void OMXCodec::findMatchingCodecs(
-         return;
-     }
- #endif
-+#ifdef STE_HARDWARE
-+    if (matchComponentName && !strcmp("OMX.ST.mp3.decoder", matchComponentName)) {
-+        matchingCodecs->add();
-+
-+        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
-+        entry->mName = String8("OMX.ST.mp3.decoder");
-+        entry->mQuirks = 0;
-+        return;
-+    } else if (matchComponentName && !strcmp("OMX.ST.aac.decoder", matchComponentName)) {
-+        matchingCodecs->add();
-+
-+        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
-+        entry->mName = String8("OMX.ST.aac.decoder");
-+        entry->mQuirks = 0;
-+        return;
-+    } else if (matchComponentName && !strcmp("OMX.ST.VFM.MPEG4Dec", matchComponentName)) {
-+        matchingCodecs->add();
-+
-+        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
-+        entry->mName = String8("OMX.ST.VFM.MPEG4Dec");
-+        entry->mQuirks = 0;
-+        return;
-+    } else if (matchComponentName && !strcmp("OMX.ST.VFM.MPEG4Dec", matchComponentName)) {
-+        matchingCodecs->add();
-+
-+        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
-+        entry->mName = String8("OMX.ST.VFM.MPEG4Dec");
-+        entry->mQuirks = 0;
-+        return;
-+    } else if (matchComponentName && !strcmp("OMX.ST.VFM.MPEG4HostDec", matchComponentName)) {
-+        matchingCodecs->add();
-+
-+        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
-+        entry->mName = String8("OMX.ST.VFM.MPEG4HostDec");
-+        entry->mQuirks = 0;
-+        return;
-+    } else if (matchComponentName && !strcmp("OMX.ST.VFM.VC1Dec", matchComponentName)) {
-+        matchingCodecs->add();
-+
-+        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
-+        entry->mName = String8("OMX.ST.VFM.VC1Dec");
-+        entry->mQuirks = 0;
-+        return;
-+    } else if (matchComponentName && !strcmp("OMX.ST.VFM.MPEG4Enc", matchComponentName)) {
-+        matchingCodecs->add();
-+
-+        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
-+        entry->mName = String8("OMX.ST.VFM.MPEG4Enc");
-+        entry->mQuirks = 0;
-+        return;
-+    } else if (matchComponentName && !strcmp("OMX.ST.VFM.MPEG4Enc", matchComponentName)) {
-+        matchingCodecs->add();
-+
-+        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
-+        entry->mName = String8("OMX.ST.VFM.MPEG4Enc");
-+        entry->mQuirks = 0;
-+        return;
-+    } else if (matchComponentName && !strcmp("OMX.ST.VFM.H264Enc", matchComponentName)) {
-+        matchingCodecs->add();
-+
-+        CodecNameAndQuirks *entry = &matchingCodecs->editItemAt(index);
-+        entry->mName = String8("OMX.ST.VFM.H264Enc");
-+        entry->mQuirks = 0;
-+        return;
-+    }
-+#endif
+@@ -15,7 +15,7 @@
+  * limitations under the License.
+  */
  
-     for (;;) {
-         ssize_t matchIndex =
-@@ -308,6 +374,20 @@ void OMXCodec::findMatchingCodecs(
+-//#define LOG_NDEBUG 0
++//#define LOG_NDEBUG 0
+ #define LOG_TAG "OMXCodec"
+ #include <utils/Log.h>
+ 
+@@ -308,6 +308,20 @@ void OMXCodec::findMatchingCodecs(
      }
  }
  
@@ -1167,7 +1104,7 @@ index 2aedd0f..1505a5f 100644
  // static
  uint32_t OMXCodec::getComponentQuirks(
          const MediaCodecList *list, size_t index) {
-@@ -359,6 +439,12 @@ uint32_t OMXCodec::getComponentQuirks(
+@@ -359,6 +373,12 @@ uint32_t OMXCodec::getComponentQuirks(
                  index, "requires-loaded-to-idle-after-allocation")) {
          quirks |= kRequiresLoadedToIdleAfterAllocation;
      }
@@ -1180,42 +1117,7 @@ index 2aedd0f..1505a5f 100644
  #ifdef QCOM_HARDWARE
      if (list->codecHasQuirk(
                  index, "requires-global-flush")) {
-@@ -391,6 +477,34 @@ bool OMXCodec::findCodecQuirks(const char *componentName, uint32_t *quirks) {
-     }
- #endif
- 
-+#ifdef STE_HARDWARE
-+    if (componentName && !strcmp("OMX.ST.aac.decoder", componentName)) {
-+        *quirks = 0;
-+        return true;
-+    } else if (componentName && !strcmp("OMX.ST.VFM.MPEG4Dec", componentName)) {
-+        *quirks = 0;
-+        return true;
-+    } else if (componentName && !strcmp("OMX.ST.VFM.MPEG4Dec", componentName)) {
-+        *quirks = 0;
-+        return true;
-+    } else if (componentName && !strcmp("OMX.ST.VFM.MPEG4HostDec", componentName)) {
-+        *quirks = 0;
-+        return true;
-+    } else if (componentName && !strcmp("OMX.ST.VFM.VC1Dec", componentName)) {
-+        *quirks = 0;
-+        return true;
-+    } else if (componentName && !strcmp("OMX.ST.VFM.MPEG4Enc", componentName)) {
-+        *quirks = 0;
-+        return true;
-+    } else if (componentName && !strcmp("OMX.ST.VFM.MPEG4Enc", componentName)) {
-+        *quirks = 0;
-+        return true;
-+    } else if (componentName && !strcmp("OMX.ST.VFM.H264Enc", componentName)) {
-+        *quirks = 0;
-+        return true;
-+    }
-+#endif
-+
-     ssize_t index = list->findCodecByName(componentName);
- 
-     if (index < 0) {
-@@ -934,6 +1048,9 @@ static size_t getFrameSize(
+@@ -934,6 +954,9 @@ static size_t getFrameSize(
          case OMX_COLOR_FormatYUV420Planar:
          case OMX_COLOR_FormatYUV420SemiPlanar:
          case OMX_TI_COLOR_FormatYUV420PackedSemiPlanar:
@@ -1225,7 +1127,7 @@ index 2aedd0f..1505a5f 100644
          /*
          * FIXME: For the Opaque color format, the frame size does not
          * need to be (w*h*3)/2. It just needs to
-@@ -1508,7 +1625,7 @@ status_t OMXCodec::setVideoOutputFormat(
+@@ -1508,7 +1531,7 @@ status_t OMXCodec::setVideoOutputFormat(
          CHECK_EQ(err, (status_t)OK);
          CHECK_EQ((int)format.eCompressionFormat, (int)OMX_VIDEO_CodingUnused);
  
@@ -1234,7 +1136,7 @@ index 2aedd0f..1505a5f 100644
          CHECK(format.eColorFormat == OMX_COLOR_FormatYUV420Planar
                 || format.eColorFormat == OMX_COLOR_FormatYUV420SemiPlanar
                 || format.eColorFormat == OMX_COLOR_FormatCbYCrY
-@@ -1519,6 +1636,9 @@ status_t OMXCodec::setVideoOutputFormat(
+@@ -1519,6 +1542,9 @@ status_t OMXCodec::setVideoOutputFormat(
                 || format.eColorFormat == OMX_SEC_COLOR_FormatNV12TPhysicalAddress
                 || format.eColorFormat == OMX_SEC_COLOR_FormatNV12Tiled
  #endif
@@ -1244,7 +1146,7 @@ index 2aedd0f..1505a5f 100644
                 );
  
  #ifdef USE_SAMSUNG_COLORFORMAT
-@@ -1530,7 +1650,7 @@ status_t OMXCodec::setVideoOutputFormat(
+@@ -1530,7 +1556,7 @@ status_t OMXCodec::setVideoOutputFormat(
          }
  #endif
  
@@ -1253,7 +1155,7 @@ index 2aedd0f..1505a5f 100644
  
          int32_t colorFormat;
          if (meta->findInt32(kKeyColorFormat, &colorFormat)
-@@ -1717,6 +1837,10 @@ void OMXCodec::setComponentRole(
+@@ -1717,6 +1743,10 @@ void OMXCodec::setComponentRole(
              "video_decoder.mpeg4", "video_encoder.mpeg4" },
          { MEDIA_MIMETYPE_VIDEO_H263,
              "video_decoder.h263", "video_encoder.h263" },
@@ -1264,7 +1166,7 @@ index 2aedd0f..1505a5f 100644
          { MEDIA_MIMETYPE_VIDEO_VPX,
              "video_decoder.vpx", "video_encoder.vpx" },
          { MEDIA_MIMETYPE_AUDIO_RAW,
-@@ -1809,6 +1933,16 @@ status_t OMXCodec::init() {
+@@ -1809,6 +1839,16 @@ status_t OMXCodec::init() {
      CHECK_EQ((int)mState, (int)LOADED);
  
      status_t err;
@@ -1281,7 +1183,7 @@ index 2aedd0f..1505a5f 100644
      if (!(mQuirks & kRequiresLoadedToIdleAfterAllocation)) {
          err = mOMX->sendCommand(mNode, OMX_CommandStateSet, OMX_StateIdle);
          CHECK_EQ(err, (status_t)OK);
-@@ -1875,7 +2009,12 @@ status_t OMXCodec::allocateBuffersOnPort(OMX_U32 portIndex) {
+@@ -1875,7 +1915,12 @@ status_t OMXCodec::allocateBuffersOnPort(OMX_U32 portIndex) {
      }
  
      status_t err = OK;
@@ -1294,7 +1196,7 @@ index 2aedd0f..1505a5f 100644
              && portIndex == kPortIndexInput) {
          err = mOMX->storeMetaDataInBuffers(mNode, kPortIndexInput, OMX_TRUE);
          if (err != OK) {
-@@ -2075,7 +2214,11 @@ status_t OMXCodec::allocateOutputBuffersFromNativeWindow() {
+@@ -2075,7 +2120,11 @@ status_t OMXCodec::allocateOutputBuffersFromNativeWindow() {
              mNativeWindow.get(),
              def.format.video.nFrameWidth,
              def.format.video.nFrameHeight,
@@ -1306,7 +1208,7 @@ index 2aedd0f..1505a5f 100644
  #else
      OMX_COLOR_FORMATTYPE eColorFormat;
  
-@@ -4785,6 +4928,9 @@ static const char *videoCompressionFormatString(OMX_VIDEO_CODINGTYPE type) {
+@@ -4785,6 +4834,9 @@ static const char *videoCompressionFormatString(OMX_VIDEO_CODINGTYPE type) {
          "OMX_VIDEO_CodingRV",
          "OMX_VIDEO_CodingAVC",
          "OMX_VIDEO_CodingMJPEG",
@@ -1809,7 +1711,7 @@ index 2fe5e75..053fab3 100644
                  bool        masterMute_l() const;
                  audio_module_handle_t loadHwModule_l(const char *name);
 diff --git a/frameworks/av/services/audioflinger/AudioPolicyService.cpp b/frameworks/av/services/audioflinger/AudioPolicyService.cpp
-index c59e438..05e61dc 100644
+index e8e3dfa..d622805 100644
 --- a/frameworks/av/services/audioflinger/AudioPolicyService.cpp
 +++ b/frameworks/av/services/audioflinger/AudioPolicyService.cpp
 @@ -269,7 +269,12 @@ audio_io_handle_t AudioPolicyService::getInput(audio_source_t inputSource,
@@ -1837,7 +1739,7 @@ index c59e438..05e61dc 100644
  
      if (input == 0) {
          return input;
-@@ -1025,6 +1034,14 @@ void AudioPolicyService::AudioCommandThread::insertCommand_l(AudioCommand *comma
+@@ -1027,6 +1036,14 @@ void AudioPolicyService::AudioCommandThread::insertCommand_l(AudioCommand *comma
          for (size_t k = i + 1; k < mAudioCommands.size(); k++) {
              if (mAudioCommands[k] == removedCommands[j]) {
                  ALOGV("suppressing command: %d", mAudioCommands[k]->mCommand);
@@ -1852,7 +1754,7 @@ index c59e438..05e61dc 100644
                  mAudioCommands.removeAt(k);
                  break;
              }
-@@ -1511,7 +1528,12 @@ static audio_io_handle_t aps_open_input(void *service,
+@@ -1513,7 +1530,12 @@ static audio_io_handle_t aps_open_input(void *service,
                                          uint32_t *pSamplingRate,
                                          audio_format_t *pFormat,
                                          audio_channel_mask_t *pChannelMask,
@@ -1865,7 +1767,7 @@ index c59e438..05e61dc 100644
  {
      sp<IAudioFlinger> af = AudioSystem::get_audio_flinger();
      if (af == 0) {
-@@ -1519,7 +1541,11 @@ static audio_io_handle_t aps_open_input(void *service,
+@@ -1521,7 +1543,11 @@ static audio_io_handle_t aps_open_input(void *service,
          return 0;
      }
  
@@ -1877,7 +1779,7 @@ index c59e438..05e61dc 100644
  }
  
  static audio_io_handle_t aps_open_input_on_module(void *service,
-@@ -1527,7 +1553,12 @@ static audio_io_handle_t aps_open_input_on_module(void *service,
+@@ -1529,7 +1555,12 @@ static audio_io_handle_t aps_open_input_on_module(void *service,
                                                    audio_devices_t *pDevices,
                                                    uint32_t *pSamplingRate,
                                                    audio_format_t *pFormat,
@@ -1890,7 +1792,7 @@ index c59e438..05e61dc 100644
  {
      sp<IAudioFlinger> af = AudioSystem::get_audio_flinger();
      if (af == 0) {
-@@ -1535,16 +1566,29 @@ static audio_io_handle_t aps_open_input_on_module(void *service,
+@@ -1537,16 +1568,29 @@ static audio_io_handle_t aps_open_input_on_module(void *service,
          return 0;
      }
  
@@ -1953,7 +1855,7 @@ index 58f3ddc..cefe37b 100644
      sp<IEffectClient> mEffectClient;    // callback interface for client notifications
      /*const*/ sp<Client> mClient;       // client for shared memory allocation, see disconnect()
 diff --git a/frameworks/av/services/audioflinger/Threads.cpp b/frameworks/av/services/audioflinger/Threads.cpp
-index e18c654..0cf7f39 100644
+index bca1549..afa3130 100644
 --- a/frameworks/av/services/audioflinger/Threads.cpp
 +++ b/frameworks/av/services/audioflinger/Threads.cpp
 @@ -1480,6 +1480,9 @@ void AudioFlinger::PlaybackThread::audioConfigChanged_l(int event, int param) {
@@ -2003,7 +1905,7 @@ index e18c654..0cf7f39 100644
      readInputParameters();
  
  }
-@@ -4549,6 +4565,12 @@ KeyedVector<int, bool> AudioFlinger::RecordThread::sessionIds() const
+@@ -4550,6 +4566,12 @@ KeyedVector<int, bool> AudioFlinger::RecordThread::sessionIds() const
      return ids;
  }
  
@@ -2051,3 +1953,16 @@ index c9de0a2..de0f8fd 100644
              // sync event triggering actual audio capture. Frames read before this event will
              // be dropped and therefore not read by the application.
              sp<SyncEvent>                       mSyncStartEvent;
+diff --git a/frameworks/av/services/camera/libcameraservice/CameraHardwareInterface.h b/frameworks/av/services/camera/libcameraservice/CameraHardwareInterface.h
+index 2bdf827..120be8d 100644
+--- a/frameworks/av/services/camera/libcameraservice/CameraHardwareInterface.h
++++ b/frameworks/av/services/camera/libcameraservice/CameraHardwareInterface.h
+@@ -640,7 +640,7 @@ private:
+ 
+     static int __set_usage(struct preview_stream_ops* w, int usage)
+     {
+-#ifdef HTC_3D_SUPPORT
++#ifdef HTC_3D_SUPPORT || STE_HARDWARE
+         usage |= GRALLOC_USAGE_PRIVATE_0;
+ #endif
+         ANativeWindow *a = anw(w);
