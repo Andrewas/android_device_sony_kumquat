@@ -1447,7 +1447,7 @@ index 7fc9872..5a82ea0 100644
      AudioFlinger.cpp            \
      Threads.cpp                 \
 diff --git a/frameworks/av/services/audioflinger/AudioFlinger.cpp b/frameworks/av/services/audioflinger/AudioFlinger.cpp
-index 3683f2c..d83e56b 100644
+index 3683f2c..ea39eb3 100644
 --- a/frameworks/av/services/audioflinger/AudioFlinger.cpp
 +++ b/frameworks/av/services/audioflinger/AudioFlinger.cpp
 @@ -1235,6 +1235,20 @@ unsigned int AudioFlinger::getInputFramesLost(audio_io_handle_t ioHandle) const
@@ -1558,12 +1558,14 @@ index 3683f2c..d83e56b 100644
      audio_hw_device_t *inHwHal = inHwDev->hwDevice();
      audio_io_handle_t id = nextUniqueId();
  
-@@ -2047,16 +2114,31 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
+@@ -2046,17 +2113,33 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
+                                         &inStream);
  #endif
      ALOGV("openInput() openInputStream returned input %p, SamplingRate %d, Format %d, Channels %x, "
-             "status %d",
 +#ifdef STE_AUDIO
-+            pInputClientId=%p",
++            "status %d, pInputClientId %p",
++#else
+             "status %d",
 +#endif
              inStream,
              config.sample_rate,
@@ -1591,7 +1593,7 @@ index 3683f2c..d83e56b 100644
          reqFormat == config.format && config.format == AUDIO_FORMAT_PCM_16_BIT &&
          (config.sample_rate <= 2 * reqSamplingRate) &&
          (getInputChannelCount(config.channel_mask) <= FCC_2) && (getInputChannelCount(reqChannels) <= FCC_2)) {
-@@ -2135,7 +2217,12 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
+@@ -2135,7 +2218,12 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
                                    reqChannels,
                                    id,
                                    primaryOutputDevice_l(),
@@ -1604,7 +1606,7 @@ index 3683f2c..d83e56b 100644
  #ifdef TEE_SINK
                                    , teeSink
  #endif
-@@ -2146,6 +2233,12 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
+@@ -2146,6 +2234,12 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
          if (pFormat != NULL) *pFormat = config.format;
          if (pChannelMask != NULL) *pChannelMask = reqChannels;
  
@@ -1617,7 +1619,7 @@ index 3683f2c..d83e56b 100644
          // notify client processes of the new input creation
          thread->audioConfigChanged_l(AudioSystem::INPUT_OPENED);
          return id;
-@@ -2154,10 +2247,45 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
+@@ -2154,10 +2248,45 @@ audio_io_handle_t AudioFlinger::openInput(audio_module_handle_t module,
      return 0;
  }
  
