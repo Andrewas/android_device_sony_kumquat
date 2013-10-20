@@ -143,9 +143,9 @@ PRODUCT_PACKAGES += \
     
 # libtinyalsa & audio.usb.default
 PRODUCT_PACKAGES += \
-    tinyalsa \ 
+    tinyalsa \
     libtinyalsa \
-    audio_policy.default \ 
+    audio_policy.default \
     audio.usb.default
 
 # We have enough storage space to hold precise GC data
