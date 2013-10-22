@@ -117,6 +117,16 @@ PRODUCT_PACKAGES += \
     libasound_module_ctl_bluetooth \
     libasound_module_pcm_bluetooth
 
+# libbt-vendor
+PRODUCT_PACKAGES += \
+    libbt-vendor
+
+# bluedroid, a2dp, BluetoothExt
+PRODUCT_PACKAGES += \
+    bluetooth.default \
+    audio.a2dp.default \
+    BluetoothExt
+
 # libaudioparameter
 PRODUCT_PACKAGES += \
     libaudioparameter
