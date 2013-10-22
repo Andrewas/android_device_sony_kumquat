@@ -20,6 +20,8 @@
 #include "common.h"
 #include "extendedcommands.h"
 
+extern int __system(const char *command);
+static int buttonlight = 0;
 
 int device_toggle_display(volatile char* key_pressed, int key_code) {
     // hold power and press volume-up
@@ -29,6 +31,13 @@ int device_toggle_display(volatile char* key_pressed, int key_code) {
 int device_handle_key(int key_code, int visible) {
 
     if (visible) {
+
+        if (!buttonlight) {
+            __system("/sbin/echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/button-backlight/brightness");
+
+            buttonlight = 1;
+        }
+
         switch (key_code) {
             case KEY_CAPSLOCK:
             case KEY_DOWN:

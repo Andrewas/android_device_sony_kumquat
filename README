@@ -12,7 +12,7 @@ Getting Started :
     cd device
     mkdir sony
     cd sony
-    git clone https://github.com/XperiaNovathor/cm10.2_kumquat.git -b master kumquat
+    git clone https://github.com/XperiaNovathor/android_device_sony_kumquat.git -b master kumquat
     cd kumquat
 
 Now connect your phone which have runing FXP CM10 :
