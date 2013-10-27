@@ -110,3 +110,6 @@
 /sys/devices/platform/nmk-i2c.2/i2c-2/2-0053/status                      0444   system     system
 /sys/devices/platform/nmk-i2c.2/i2c-2/2-0053/torch_current               0666   system     system
 /sys/devices/platform/nmk-i2c.2/i2c-2/2-0053/torch_enable                0666   system     system
+
+# wifi tethering
+/dev/rfkill               0660    root        wifi 
