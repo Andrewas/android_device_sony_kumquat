@@ -1,4 +1,4 @@
-#       modified:   Android.mk
+# modified: Android.mk
 diff --git a/system/netd/Android.mk b/system/netd/Android.mk
 index 1f7ceea..9067bf2 100644
 --- a/system/netd/Android.mk
@@ -8,7 +8,7 @@ index 1f7ceea..9067bf2 100644
                            liblogwrap
  
 +ifeq ($(BOARD_TI_SOFTAP),true)
-+  LOCAL_SRC_FILES += SoftapControllerTI.cpp
++ LOCAL_SRC_FILES += SoftapControllerTI.cpp
 +else
  ifdef USES_TI_MAC80211
    LOCAL_SRC_FILES += SoftapControllerTI.cpp
