@@ -110,7 +110,8 @@ PRODUCT_PACKAGES += \
     hcitool \
     l2ping \
     hciattach \
-    rfcomm
+   rfcomm \
+	btiotest
 
 # BT A2DP
 PRODUCT_PACKAGES += \
@@ -150,18 +151,13 @@ PRODUCT_PACKAGES += \
 # libomxil-bellagio
 PRODUCT_PACKAGES += \
     libomxil-bellagio
-    
+
 # libtinyalsa & audio.usb.default
 PRODUCT_PACKAGES += \
     tinyalsa \
     libtinyalsa \
     audio_policy.default \
     audio.usb.default
-
-# We have enough storage space to hold precise GC data
-PRODUCT_TAGS += dalvik.gc.type-precise
-
-PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 # Custom init / uevent
 PRODUCT_COPY_FILES += \
@@ -257,19 +253,27 @@ PRODUCT_COPY_FILES += \
 
 # patched JB cn_binary needed for mobile network for CM10.2 only
 PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/prebuilt/cn_server:system/bin/cn_server
+   $(LOCAL_PATH)/prebuilt/system/bin/cn_server:system/bin/cn_server
 
 # Copy the Bluetooth permissions file. The permissions file also enables Bluetooth menu in Settings?
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml
 
-#Barometar permissions
+# Barometar permissions
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml
+
+# We have enough storage space to hold precise GC data
+PRODUCT_TAGS += dalvik.gc.type-precise
+
+PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
 $(call inherit-product-if-exists, vendor/sony/kumquat/kumquat-vendor.mk)
 
 PRODUCT_PROPERTY_OVERRIDES += \
+    sys.mem.max_hidden_apps=10 \
+    persist.sys.usb.config=mtp \
+    wifi.interface=wlan0 \
     ro.sf.lcd_density=240
