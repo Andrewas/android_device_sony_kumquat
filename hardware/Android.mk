@@ -233,10 +233,10 @@ LOCAL_MODULE:=libdbus
 LOCAL_CFLAGS+= \
 	-DDBUS_COMPILATION \
 	-DANDROID_MANAGED_SOCKET \
-    -DANDROID_ATOMIC \
+	-DANDROID_ATOMIC \
 	-DDBUS_MACHINE_UUID_FILE=\"/etc/machine-id\" \
-    -DDBUS_SYSTEM_CONFIG_FILE=\"/system/etc/dbus.conf\" \
-    -DDBUS_SESSION_CONFIG_FILE=\"/system/etc/session.conf\"
+	-DDBUS_SYSTEM_CONFIG_FILE=\"/system/etc/dbus.conf\" \
+	-DDBUS_SESSION_CONFIG_FILE=\"/system/etc/session.conf\"
 ifeq ($(LOG_TO_ANDROID_LOGCAT),true)
 LOCAL_CFLAGS+= -DDBUS_ANDROID_LOG
 LOCAL_SHARED_LIBRARIES+= libcutils
@@ -272,6 +272,5 @@ LOCAL_CFLAGS := -mabi=aapcs-linux
 LOCAL_MODULE_TAGS := optional
 LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
 include $(BUILD_SHARED_LIBRARY)
-
 
 endif # BOARD_USES_STE_HARDWARE
