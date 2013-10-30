@@ -58,7 +58,7 @@ BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_wl12xx
 
 # Graphics
 USE_OPENGL_RENDERER := true
-BOARD_EGL_CFG := device/sony/kumquat/config/egl.cfg
+BOARD_EGL_CFG := device/sony/kumquat/prebuilt/system/lib/egl/egl.cfg
 COMMON_GLOBAL_CFLAGS += -DSTE_HARDWARE
 
 # jb camera
@@ -89,17 +89,15 @@ BOARD_HAS_SDCARD_INTERNAL := true
 BOARD_USES_MMCUTILS := true
 BOARD_HAS_NO_MISC_PARTITION := true
 
-# cwm specific 
+# Cwm specific 
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/sony/kumquat/recovery/recovery-keys.c
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_10x18.h\"
-
-
-TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/musb-ux500.0/musb-hdrc/gadget/lun%d/file"
-
 
 #CWM recovery fix
 TARGET_RECOVERY_FSTAB = device/sony/kumquat/config/root/fstab.st-ericsson
 RECOVERY_FSTAB_VERSION := 2
+
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/musb-ux500.0/musb-hdrc/gadget/lun%d/file"
 
 # Kernel information
 TARGET_KERNEL_CONFIG := xperiau_defconfig
@@ -108,15 +106,16 @@ TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 BOARD_KERNEL_BASE := 0x40200000
 BOARD_RECOVERY_BASE := 0x40200000
 BOARD_KERNEL_PAGESIZE := 2048
+BOARD_KERNEL_CMDLINE := cachepolicy=writealloc noinitrd init=init board_id=1 logo.nologo root=/dev/ram0 rw rootwait console=null androidboot.console=null androidboot.hardware=st-ericsson mem=96M@0 mem_mtrace=15M@96M mem_mshared=1M@111M mem_modem=16M@112M mem=32M@128M mem_issw=1M@160M hwmem=71M@161M mem=280M@232M mpcore_wdt.mpcore_margin=359 end
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000
 
 # Partition information
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true 
 BOARD_VOLD_MAX_PARTITIONS := 16
 
-BOARD_BOOTIMAGE_PARTITION_SIZE := 0x01400000
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x01400000
-BOARD_CMDLINE := device/sony/kumquat/config/cmdline.txt
+# partition size is dec=16777216 hex=01000000 so 0x01000000 is correct one!
+BOARD_BOOTIMAGE_PARTITION_SIZE := 0x01000000
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x01000000
 
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1056964608
 BOARD_USERDATA_PARTITION_SIZE := 2147483648
