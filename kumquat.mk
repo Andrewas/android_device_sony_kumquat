@@ -21,40 +21,6 @@ $(call inherit-product-if-exists, vendor/sony/kumquat/kumquat-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/sony/kumquat/overlay
 
-# Permissions
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
-    frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
-    frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
-    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
-    frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
-    frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
-    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
-    frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
-    frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
-    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
-    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
-    frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
-    frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
-    frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
-    frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
-    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
-    packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
-
-# Configs
-PRODUCT_COPY_FILES += \
-    device/sony/kumquat/config/media_codecs.xml:system/etc/media_codecs.xml \
-    device/sony/kumquat/config/egl.cfg:system/lib/egl/egl.cfg \
-    device/sony/kumquat/config/asound.conf:system/etc/asound.conf \
-    device/sony/kumquat/config/dbus.conf:system/etc/dbus.conf \
-    device/sony/kumquat/config/sysmon.cfg:system/etc/sysmon.cfg \
-    device/sony/kumquat/config/hostapd.conf:system/etc/wifi/hostapd.conf \
-    device/sony/kumquat/config/init.d/01stesetup:system/etc/init.d/01stesetup \
-    device/sony/kumquat/config/init.d/10dhcpcd:system/etc/init.d/10dhcpcd \
-    device/sony/kumquat/config/init.d/10hostapd:system/etc/init.d/10hostapd \
-    device/sony/kumquat/config/init.d/50selinuxrelabel:system/etc/init.d/50selinuxrelabel \
-    device/sony/kumquat/config/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
-
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \
@@ -110,8 +76,8 @@ PRODUCT_PACKAGES += \
     hcitool \
     l2ping \
     hciattach \
-   rfcomm \
-	btiotest
+    rfcomm \
+    btiotest
 
 # BT A2DP
 PRODUCT_PACKAGES += \
@@ -158,6 +124,41 @@ PRODUCT_PACKAGES += \
     libtinyalsa \
     audio_policy.default \
     audio.usb.default
+
+# Permissions
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
+    frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
+    frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
+    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
+    frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
+    frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
+    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
+    frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
+    frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
+    frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
+    frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
+    frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
+    frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
+    frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
+    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
+    packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
+
+# Configs
+PRODUCT_COPY_FILES += \
+    device/sony/kumquat/config/media_codecs.xml:system/etc/media_codecs.xml \
+    device/sony/kumquat/config/egl.cfg:system/lib/egl/egl.cfg \
+    device/sony/kumquat/config/asound.conf:system/etc/asound.conf \
+    device/sony/kumquat/config/dbus.conf:system/etc/dbus.conf \
+    device/sony/kumquat/config/sysmon.cfg:system/etc/sysmon.cfg \
+    device/sony/kumquat/config/hostapd.conf:system/etc/wifi/hostapd.conf \
+    device/sony/kumquat/config/init.d/01stesetup:system/etc/init.d/01stesetup \
+    device/sony/kumquat/config/init.d/10dhcpcd:system/etc/init.d/10dhcpcd \
+    device/sony/kumquat/config/init.d/10hostapd:system/etc/init.d/10hostapd \
+    device/sony/kumquat/config/init.d/50selinuxrelabel:system/etc/init.d/50selinuxrelabel \
+    device/sony/kumquat/config/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
 # Custom init / uevent
 PRODUCT_COPY_FILES += \

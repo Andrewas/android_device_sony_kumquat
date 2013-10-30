@@ -3,10 +3,12 @@ USE_CAMERA_STUB := true
 # inherit from the proprietary version
 -include vendor/sony/kumquat/BoardConfigVendor.mk
 
-TARGET_SPECIFIC_HEADER_PATH := device/sony/kumquat/include
-TARGET_SPECIFIC_HEADER_PATH += device/sony/kumquat/hardware
-TARGET_SPECIFIC_HEADER_PATH += hardware/semc/bluetooth/glib
-TARGET_SPECIFIC_HEADER_PATH += hardware/semc/bluetooth/bluez/lib
+TARGET_SPECIFIC_HEADER_PATH := \
+    device/sony/lotus/include \
+    device/sony/lotus/hardware \
+    hardware/semc/bluetooth/glib \
+    hardware/semc/bluetooth/bluez/lib \
+    hardware/semc/bluetooth/bluez/btio
 
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
@@ -92,8 +94,6 @@ BOARD_HAS_NO_MISC_PARTITION := true
 # Cwm specific 
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/sony/kumquat/recovery/recovery-keys.c
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_10x18.h\"
-
-#CWM recovery fix
 TARGET_RECOVERY_FSTAB = device/sony/kumquat/config/root/fstab.st-ericsson
 RECOVERY_FSTAB_VERSION := 2
 
