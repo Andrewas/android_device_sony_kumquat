@@ -12,6 +12,7 @@ bin/modem_log_relay
 bin/modemcatcher
 bin/modem-supervisor
 bin/msa
+bin/pand
 bin/psccd
 bin/rfhal_export
 bin/simd

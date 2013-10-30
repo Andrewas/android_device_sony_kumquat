@@ -148,50 +148,53 @@ PRODUCT_COPY_FILES += \
 
 # Configs
 PRODUCT_COPY_FILES += \
-    device/sony/kumquat/config/media_codecs.xml:system/etc/media_codecs.xml \
-    device/sony/kumquat/config/egl.cfg:system/lib/egl/egl.cfg \
-    device/sony/kumquat/config/asound.conf:system/etc/asound.conf \
-    device/sony/kumquat/config/dbus.conf:system/etc/dbus.conf \
-    device/sony/kumquat/config/sysmon.cfg:system/etc/sysmon.cfg \
-    device/sony/kumquat/config/hostapd.conf:system/etc/wifi/hostapd.conf \
-    device/sony/kumquat/config/init.d/01stesetup:system/etc/init.d/01stesetup \
-    device/sony/kumquat/config/init.d/10dhcpcd:system/etc/init.d/10dhcpcd \
-    device/sony/kumquat/config/init.d/10hostapd:system/etc/init.d/10hostapd \
-    device/sony/kumquat/config/init.d/50selinuxrelabel:system/etc/init.d/50selinuxrelabel \
-    device/sony/kumquat/config/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
+    $(LOCAL_PATH)/prebuilt/system/lib/egl/egl.cfg:system/lib/egl/egl.cfg \
+    $(LOCAL_PATH)/prebuilt/system/etc/media_codecs.xml:system/etc/media_codecs.xml \
+    $(LOCAL_PATH)/prebuilt/system/etc/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/prebuilt/system/etc/asound.conf:system/etc/asound.conf \
+    $(LOCAL_PATH)/prebuilt/system/etc/dbus.conf:system/etc/dbus.conf \
+    $(LOCAL_PATH)/prebuilt/system/etc/sysmon.cfg:system/etc/sysmon.cfg \
+    $(LOCAL_PATH)/prebuilt/system/etc/dash.conf:system/etc/dash.conf \
+    $(LOCAL_PATH)/prebuilt/system/etc/hw_config.sh:system/etc/hw_config.sh \
+    $(LOCAL_PATH)/prebuilt/system/etc/wifi/hostapd.conf:system/etc/wifi/hostapd.conf \
+    $(LOCAL_PATH)/prebuilt/system/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    $(LOCAL_PATH)/prebuilt/system/etc/wifi/p2p_supplicant.conf:system/etc/wifi/p2p_supplicant.conf \
+    $(LOCAL_PATH)/prebuilt/system/etc/init.d/01stesetup:system/etc/init.d/01stesetup \
+    $(LOCAL_PATH)/prebuilt/system/etc/init.d/10dhcpcd:system/etc/init.d/10dhcpcd \
+    $(LOCAL_PATH)/prebuilt/system/etc/init.d/10hostapd:system/etc/init.d/10hostapd \
+    $(LOCAL_PATH)/prebuilt/system/etc/init.d/50selinuxrelabel:system/etc/init.d/50selinuxrelabel \
+    $(LOCAL_PATH)/prebuilt/system/media/LMprec_508.emd:system/media/LMprec_508.emd \
+    $(LOCAL_PATH)/prebuilt/system/media/PFFprec_600.emd:system/media/PFFprec_600.emd
 
 # Custom init / uevent
 PRODUCT_COPY_FILES += \
-    device/sony/kumquat/config/root/init.rc:root/init.rc \
-    device/sony/kumquat/config/root/fstab.st-ericsson:root/fstab.st-ericsson \
-    device/sony/kumquat/config/root/init.st-ericsson.rc:root/init.st-ericsson.rc \
-    device/sony/kumquat/config/root/ueventd.st-ericsson.rc:root/ueventd.st-ericsson.rc
+    $(LOCAL_PATH)/prebuilt/root/init.rc:root/init.rc \
+    $(LOCAL_PATH)/prebuilt/root/fstab.st-ericsson:root/fstab.st-ericsson \
+    $(LOCAL_PATH)/prebuilt/root/init.st-ericsson.rc:root/init.st-ericsson.rc \
+    $(LOCAL_PATH)/prebuilt/root/ueventd.st-ericsson.rc:root/ueventd.st-ericsson.rc
 
 # Recovery bootstrap script
 PRODUCT_COPY_FILES += \
-    device/sony/kumquat/recovery/bootrec:root/sbin/bootrec \
-    device/sony/kumquat/recovery/usbid_init.sh:root/sbin/usbid_init.sh \
-    device/sony/kumquat/recovery/postrecoveryboot.sh:root/sbin/postrecoveryboot.sh
+    $(LOCAL_PATH)/recovery/bootrec:root/sbin/bootrec \
+    $(LOCAL_PATH)/recovery/usbid_init.sh:root/sbin/usbid_init.sh \
+    $(LOCAL_PATH)/recovery/postrecoveryboot.sh:root/sbin/postrecoveryboot.sh
 
 
 # HW Configs
 PRODUCT_COPY_FILES += \
-    device/sony/kumquat/config/omxloaders:system/etc/omxloaders \
-    device/sony/kumquat/config/ril_config:system/etc/ril_config \
-    device/sony/kumquat/config/install_wlan:system/bin/install_wlan \
-    device/sony/kumquat/config/ste_modem.sh:system/etc/ste_modem.sh
+    $(LOCAL_PATH)/prebuilt/system/etc/omxloaders:system/etc/omxloaders \
+    $(LOCAL_PATH)/prebuilt/system/etc/ril_config:system/etc/ril_config \
+    $(LOCAL_PATH)/prebuilt/system/bin/install_wlan:system/bin/install_wlan \
+    $(LOCAL_PATH)/prebuilt/system/etc/ste_modem.sh:system/etc/ste_modem.sh
+
+# WiFi config utility
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/system/bin/iw:system/bin/iw \
 
 # GPS
 PRODUCT_COPY_FILES += \
-    device/sony/kumquat/config/gps.conf:system/etc/gps.conf\
-    device/sony/kumquat/config/cacert.txt:system/etc/suplcert/cacert.txt
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    sys.mem.max_hidden_apps=10
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp \
-    wifi.interface=wlan0
+    $(LOCAL_PATH)/prebuilt/system/etc/gps.conf:system/etc/gps.conf \
+    $(LOCAL_PATH)/prebuilt/system/etc/suplcert/cacert.txt:system/etc/suplcert/cacert.txt
 
 # The gps config appropriate for this device
 $(call inherit-product, device/common/gps/gps_eu_supl.mk)
@@ -200,53 +203,44 @@ $(call inherit-product, device/common/gps/gps_eu_supl.mk)
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
-# This device is mdpi.  However the platform doesn't
-# currently contain all of the bitmaps at mdpi density so
-# we do this little trick to fall back to the mdpi version
-# if the mdpi doesn't exist.
-PRODUCT_AAPT_CONFIG := normal mdpi hdpi
-PRODUCT_AAPT_PREF_CONFIG := hdpi
-
-# Configuration scripts
+# Ramdisk scripts
 PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/config/root/init.st-ericsson.device.rc:root/init.st-ericsson.device.rc \
-   device/sony/kumquat/prebuilt/logo-480x854.rle:root/logo.rle
-
-# Configuration scripts
-PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/config/dash.conf:system/etc/dash.conf \
-   $(LOCAL_PATH)/prebuilt/hw_config.sh:system/etc/hw_config.sh
+   $(LOCAL_PATH)/prebuilt/root/init.st-ericsson.device.rc:root/init.st-ericsson.device.rc \
+   $(LOCAL_PATH)/prebuilt/logo-480x854.rle:root/logo.rle
 
 # fake script needed for recovery
 PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/prebuilt/modelid_cfg.sh:system/bin/modelid_cfg.sh
-
+   $(LOCAL_PATH)/prebuilt/system/bin/modelid_cfg.sh:system/bin/modelid_cfg.sh
 
 # USB function switching
 PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/config/root/init.st-ericsson.usb.rc:root/init.st-ericsson.usb.rc
-
-PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/config/media_profiles.xml:system/etc/media_profiles.xml
+   $(LOCAL_PATH)/prebuilt/root/init.st-ericsson.usb.rc:root/init.st-ericsson.usb.rc
 
 # Key layouts and touchscreen
 PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/config/AB8500_Hs_Button.kl:system/usr/keylayout/AB8500_Hs_Button.kl \
-   $(LOCAL_PATH)/config/simple_remote.kl:system/usr/keylayout/simple_remote.kl \
-   $(LOCAL_PATH)/config/simple_remote_appkey.kl:system/usr/keylayout/simple_remote_appkey.kl \
-   $(LOCAL_PATH)/config/cyttsp_key.kl:system/usr/keylayout/cyttsp_key.kl \
-   $(LOCAL_PATH)/config/STMPE-keypad.kl:system/usr/keylayout/STMPE-keypad.kl \
-   $(LOCAL_PATH)/config/tc3589x-keypad.kl:system/usr/keylayout/tc3589x-keypad.kl \
-   $(LOCAL_PATH)/config/ux500-ske-keypad.kl:system/usr/keylayout/ux500-ske-keypad.kl.kl \
-   $(LOCAL_PATH)/config/ux500-ske-keypad-qwertz.kl:system/usr/keylayout/ux500-ske-keypad-qwertz.kl \
-   $(LOCAL_PATH)/config/cyttsp-spi.idc:system/usr/idc/cyttsp-spi.idc \
-   $(LOCAL_PATH)/config/synaptics_rmi4_i2c.idc:system/usr/idc/synaptics_rmi4_i2c.idc \
-   $(LOCAL_PATH)/config/sensor00_f11_sensor0.idc:system/usr/idc/sensor00_f11_sensor0.idc
+   $(LOCAL_PATH)/prebuilt/system/usr/keylayout/AB8500_Hs_Button.kl:system/usr/keylayout/AB8500_Hs_Button.kl \
+   $(LOCAL_PATH)/prebuilt/system/usr/keylayout/simple_remote.kl:system/usr/keylayout/simple_remote.kl \
+   $(LOCAL_PATH)/prebuilt/system/usr/keylayout/simple_remote_appkey.kl:system/usr/keylayout/simple_remote_appkey.kl \
+   $(LOCAL_PATH)/prebuilt/system/usr/keylayout/cyttsp_key.kl:system/usr/keylayout/cyttsp_key.kl \
+   $(LOCAL_PATH)/prebuilt/system/usr/keylayout/STMPE-keypad.kl:system/usr/keylayout/STMPE-keypad.kl \
+   $(LOCAL_PATH)/prebuilt/system/usr/keylayout/tc3589x-keypad.kl:system/usr/keylayout/tc3589x-keypad.kl \
+   $(LOCAL_PATH)/prebuilt/system/usr/keylayout/ux500-ske-keypad.kl:system/usr/keylayout/ux500-ske-keypad.kl.kl \
+   $(LOCAL_PATH)/prebuilt/system/usr/keylayout/ux500-ske-keypad-qwertz.kl:system/usr/keylayout/ux500-ske-keypad-qwertz.kl \
+   $(LOCAL_PATH)/prebuilt/system/usr/idc/cyttsp-spi.idc:system/usr/idc/cyttsp-spi.idc \
+   $(LOCAL_PATH)/prebuilt/system/usr/idc/synaptics_rmi4_i2c.idc:system/usr/idc/synaptics_rmi4_i2c.idc \
+   $(LOCAL_PATH)/prebuilt/system/usr/idc/sensor00_f11_sensor0.idc:system/usr/idc/sensor00_f11_sensor0.idc
 
 # Misc configuration files
 PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/config/cflashlib.cfg:system/etc/cflashlib.cfg \
-   $(LOCAL_PATH)/config/flashled_param_config.cfg:system/etc/flashled_param_config.cfg
+   $(LOCAL_PATH)/prebuilt/system/etc/cflashlib.cfg:system/etc/cflashlib.cfg \
+   $(LOCAL_PATH)/prebuilt/system/etc/flashled_param_config.cfg:system/etc/flashled_param_config.cfg
+
+# Vendor libs
+PRODUCT_COPY_FILES += \
+   $(LOCAL_PATH)/prebuilt/vendor/lib/libwvdrm_L3.so:system/vendor/lib/libwvdrm_L3.so \
+   $(LOCAL_PATH)/prebuilt/vendor/lib/libwvm.so:system/vendor/lib/libwvm.so \
+   $(LOCAL_PATH)/prebuilt/vendor/lib/libWVStreamControlAPI_L3.so:system/vendor/lib/libWVStreamControlAPI_L3.so \
+   $(LOCAL_PATH)/prebuilt/vendor/lib/drm/libdrmwvmplugin.so:system/vendor/lib/drm/libdrmwvmplugin.so
 
 # Bootanimation
 PRODUCT_COPY_FILES += \
@@ -263,6 +257,13 @@ PRODUCT_COPY_FILES += \
 # Barometar permissions
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml
+
+# This device is mdpi.  However the platform doesn't
+# currently contain all of the bitmaps at mdpi density so
+# we do this little trick to fall back to the mdpi version
+# if the mdpi doesn't exist.
+PRODUCT_AAPT_CONFIG := normal mdpi hdpi
+PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 # We have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
