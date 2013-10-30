@@ -70,19 +70,18 @@
 #ALS
 /sys/bus/i2c/devices/2-0040/als_on 0666 system system
 
-# bluetooth
-/sys/devices/platform/cg2900.0/cg2900-uart.0/bluetooth/hci0/rfkill* state 0666 root bluetooth
-
 /sys/devices/platform/musb-ux500.0/musb-hdrc/usb* uevent 0660 root usb
 /dev/input/event10                                 0666 system system
 /sys/bus/i2c/devices/2-0037/als                    0666 system system
 /sys/bus/i2c/devices/2-0036/als_enable             0666 system system
 /sys/bus/i2c/devices/2-0053/status                 0666 system system
 /sys/bus/i2c/devices/2-0053/torch_enable           0666 system system
-/dev/rfkill                                        0660 wifi   wifi
 /sys/devices/av8100_hdmi* disponoff                0660 root system
 /sys/devices/av8100_hdmi* hdmisdtvswitch           0660 root system
 /dev/hdmi                                          0660 root system
+
+# Bluetooth
+/sys/devices/platform/cg2900.0/cg2900-uart.0/bluetooth/hci0/rfkill* state	 0666 root bluetooth
 
 # STE CG2900
 /dev/cg2900_bt_audio      0660   system     system
@@ -112,4 +111,4 @@
 /sys/devices/platform/nmk-i2c.2/i2c-2/2-0053/torch_enable                0666   system     system
 
 # wifi tethering
-/dev/rfkill               0660    root        wifi 
+/dev/rfkill               0660    root        wifi
