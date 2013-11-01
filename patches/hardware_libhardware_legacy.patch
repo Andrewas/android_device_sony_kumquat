@@ -175,7 +175,7 @@ index 5904af2..fe40839 100644
      };
  
 +#ifdef STE_AUDIO
-+// AUDIO_INPUT_CLIENT_ID_BASE provide a means to refer to client Id´s not explicitly defined in the enum audio_input_clients
++// AUDIO_INPUT_CLIENT_ID_BASE provide a means to refer to client Id/s not explicitly defined in the enum audio_input_clients
 +#define AUDIO_INPUT_CLIENT_ID_BASE AUDIO_INPUT_CLIENT_ID1
 +
 +    enum audio_input_clients {
