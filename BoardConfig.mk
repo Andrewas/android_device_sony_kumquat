@@ -4,8 +4,8 @@ USE_CAMERA_STUB := true
 -include vendor/sony/kumquat/BoardConfigVendor.mk
 
 TARGET_SPECIFIC_HEADER_PATH := \
-    device/sony/lotus/include \
-    device/sony/lotus/hardware \
+    device/sony/kumquat/include \
+    device/sony/kumquathardware \
     hardware/semc/bluetooth/glib \
     hardware/semc/bluetooth/bluez/lib \
     hardware/semc/bluetooth/bluez/btio
