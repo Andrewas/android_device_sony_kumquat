@@ -5,7 +5,7 @@ USE_CAMERA_STUB := true
 
 TARGET_SPECIFIC_HEADER_PATH := \
     device/sony/kumquat/include \
-    device/sony/kumquathardware \
+    device/sony/kumquat/hardware \
     hardware/semc/bluetooth/glib \
     hardware/semc/bluetooth/bluez/lib \
     hardware/semc/bluetooth/bluez/btio
@@ -118,8 +118,6 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x01000000
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1056964608
 BOARD_USERDATA_PARTITION_SIZE := 2147483648
 BOARD_FLASH_BLOCK_SIZE := 131072
-BOARD_FORCE_KERNEL_ADDRESS := 0x00008000
-BOARD_MKBOOTIMG_ARGS := 0x01000000
 
 COMMON_GLOBAL_CFLAGS += -DNEW_NOTIFICATION
 
