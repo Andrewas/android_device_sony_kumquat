@@ -9,7 +9,7 @@ Getting Started :
     cd device
     mkdir sony
     cd sony
-    git clone https://github.com/XperiaNovathor/android_device_sony_kumquat.git -b master kumquat
+    git clone https://github.com/Andrewas/android_device_sony_kumquat.git -b master kumquat
     cd kumquat
 
 Now connect your phone which have runing FXP CM10 :
@@ -17,7 +17,7 @@ Now connect your phone which have runing FXP CM10 :
     ./extract-files.sh
     cd ../../..
     cd hardware
-    git clone https://github.com/munjeni/aosp_4.3_hardware_semc.git -b master semc
+    git clone https://github.com/Andrewas/aosp_4.3_hardware_semc.git -b master semc
     cd ..
     mkdir -p kernel/sony
     cd kernel/sony
