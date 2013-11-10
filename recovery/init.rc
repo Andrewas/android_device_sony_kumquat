@@ -93,7 +93,6 @@ on property:sys.storage.ums_enabled=1
     write /sys/class/android_usb/android0/idVendor 0FCE
     write /sys/class/android_usb/android0/idProduct 6171
     write /sys/class/android_usb/android0/functions mass_storage,adb
-    write /sys/devices/virtual/android_usb/android0/f_mass_storage/lun/file /dev/block/vold/179:14
     write /sys/class/android_usb/android0/enable 1
 
 on property:sys.storage.ums_enabled=0
@@ -101,5 +100,4 @@ on property:sys.storage.ums_enabled=0
     write /sys/class/android_usb/android0/idVendor 0FCE
     write /sys/class/android_usb/android0/idProduct 6171
     write /sys/class/android_usb/android0/functions mass_storage,adb
-    write /sys/devices/virtual/android_usb/android0/f_mass_storage/lun/file 
     write /sys/class/android_usb/android0/enable 1
