@@ -95,8 +95,6 @@ BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_10x18.h\"
 TARGET_RECOVERY_FSTAB = device/sony/kumquat/prebuilt/root/fstab.st-ericsson
 RECOVERY_FSTAB_VERSION := 2
 
-TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/musb-ux500.0/musb-hdrc/gadget/lun%d/file"
-
 # Kernel information
 TARGET_KERNEL_CONFIG := xperiau_defconfig
 TARGET_KERNEL_SOURCE := kernel/sony/u8500
