@@ -258,6 +258,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml
 
+# This device is mdpi.  However the platform doesn't
+# currently contain all of the bitmaps at mdpi density so
+# we do this little trick to fall back to the mdpi version
+# if the mdpi doesn't exist.
+PRODUCT_AAPT_CONFIG := normal mdpi hdpi
+PRODUCT_AAPT_PREF_CONFIG := hdpi
+
 # We have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
