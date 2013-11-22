@@ -61,6 +61,9 @@ USE_OPENGL_RENDERER := true
 BOARD_EGL_CFG := device/sony/kumquat/prebuilt/system/lib/egl/egl.cfg
 COMMON_GLOBAL_CFLAGS += -DSTE_HARDWARE
 
+# libutils backward compatibility for hals
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
+
 # jb camera
 COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB
 
@@ -91,7 +94,7 @@ BOARD_HAS_NO_MISC_PARTITION := true
 
 # Cwm specific 
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/sony/kumquat/recovery/recovery-keys.c
-BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_10x18.h\"
+BOARD_USE_CUSTOM_RECOVERY_FONT := \"lucidaconsole_10x18.h\"
 TARGET_RECOVERY_FSTAB = device/sony/kumquat/prebuilt/root/fstab.st-ericsson
 RECOVERY_FSTAB_VERSION := 2
 

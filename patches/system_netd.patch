@@ -1,14 +1,31 @@
+#       modified:   Android.mk
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       SoftapControllerTI-XPERIA.cpp
+#       SoftapControllerTI-XPERIA.h
+#       nl80211.h
 diff --git a/system/netd/Android.mk b/system/netd/Android.mk
-index 0315069..648c797 100644
+index b3990e1..91195f7 100644
 --- a/system/netd/Android.mk
 +++ b/system/netd/Android.mk
-@@ -40,11 +40,17 @@ LOCAL_SHARED_LIBRARIES := libstlport libsysutils liblog libcutils libnetutils \
+@@ -35,17 +35,26 @@ LOCAL_C_INCLUDES := $(KERNEL_HEADERS) \
+                     bionic/libc/private \
+                     $(call include-path-for, libhardware_legacy)/hardware_legacy
+
++ifdef BOARD_SOFTAP_DEVICE_TI
++    LOCAL_C_INCLUDES += external/libnl-headers
++endif
++
+ LOCAL_CFLAGS := -Werror=format
+
+ LOCAL_SHARED_LIBRARIES := libstlport libsysutils liblog libcutils libnetutils \
                            libcrypto libhardware_legacy libmdnssd libdl \
                            liblogwrap
- 
+
 +ifdef BOARD_SOFTAP_DEVICE_TI
 +    LOCAL_SRC_FILES += SoftapControllerTI-XPERIA.cpp
-+    LOCAL_C_INCLUDES += external/libnl-headers
 +    LOCAL_STATIC_LIBRARIES += libnl_2
 +else
  ifdef USES_TI_MAC80211
@@ -17,7 +34,7 @@ index 0315069..648c797 100644
    LOCAL_SRC_FILES += SoftapController.cpp
  endif
 +endif
- 
+
  ifneq ($(BOARD_HOSTAPD_DRIVER),)
    LOCAL_CFLAGS += -DHAVE_HOSTAPD
 diff --git a/system/netd/SoftapControllerTI-XPERIA.cpp b/system/netd/SoftapControllerTI-XPERIA.cpp

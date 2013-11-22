@@ -3,14 +3,24 @@ import init.st-ericsson.device.rc
 
 on early-init
     mkdir /mnt 0775 root system
-    mkdir /storage 0050 root sdcard_r
-    mkdir /storage/sdcard0 0000 system system
-    mkdir /storage/usbdisk 0000 system system
+
+    mkdir /mnt/shell 0700 shell shell
+    mkdir /mnt/media_rw 0700 media_rw media_rw
+    mkdir /storage 0751 root sdcard_r
+
+    # storage directories
+    mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
+    mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
+
+    # fuse storage directories
+    mkdir /storage/sdcard0 0700 root root
+    mkdir /storage/usbdisk 0700 root root
+
+    export EXTERNAL_STORAGE /storage/sdcard0
 
     # for backwards compatibility
     symlink /storage/sdcard0 /sdcard
     symlink /storage/sdcard0 /mnt/sdcard
-    export EXTERNAL_STORAGE /storage/sdcard0
     symlink /storage/usbdisk /usbdisk
     symlink /storage/usbdisk /mnt/usbdisk
 
@@ -633,10 +643,19 @@ service xssm /system/bin/xssm
     class main
     socket xssm stream 0660 root system
 
-#service logcat /system/bin/logcat -r 1000 -v long -f /sde/logcat.log
+service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0 /storage/sdcard0
+    class late_start
+    disabled
+
+service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
+    class late_start
+    disabled
+
+#service logcatgrab /sbin/logcat_grab
 #    class main
-#    user system
+#    user root
 #    group system
+#    disabled
 #    oneshot
 
 

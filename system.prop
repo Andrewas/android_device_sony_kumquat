@@ -9,6 +9,15 @@ ro.opengles.version=131072
 # debug.sf.hw=1 Use Mali as compositor in SurfaceFlinger
 debug.sf.hw=1
 
+#cm11 fix
+ro.zygote.disable_gl_preload=1
+ro.bq.gpu_to_cpu_unsupported=1
+debug.hwui.render_dirty_regions=false
+
+#ADB
+ro.debuggable=1
+persist.sys.usb.config=adb
+
 # Android defaults EGL preserved swap behaviour
 # This gives bad performace for deferred renderers
 # such as Mali.
@@ -35,13 +44,6 @@ ro.build.characteristics=nosdcard
 #RIL
 
 ro.telephony.ril_class=SonyU8500RIL
-
-# NFC
-ro.nfc.on.default=false
-ro.nfc.se.sim.enable=true
-ro.nfc.se.smx.enable=false
-ro.nfc.icon.enable=true
-ro.nfc.vendor.name=nxp
 
 #STE: Hardware video codecs configuration
 ste.video.dec.mpeg4.in.size=8192

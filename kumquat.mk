@@ -130,7 +130,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
-    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
     frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
@@ -171,7 +170,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/root/init.rc:root/init.rc \
     $(LOCAL_PATH)/prebuilt/root/fstab.st-ericsson:root/fstab.st-ericsson \
     $(LOCAL_PATH)/prebuilt/root/init.st-ericsson.rc:root/init.st-ericsson.rc \
-    $(LOCAL_PATH)/prebuilt/root/ueventd.st-ericsson.rc:root/ueventd.st-ericsson.rc
+    $(LOCAL_PATH)/prebuilt/root/ueventd.st-ericsson.rc:root/ueventd.st-ericsson.rc \
+    $(LOCAL_PATH)/prebuilt/root/init.environ.rc:root/init.environ.rc
 
 # Recovery bootstrap script
 PRODUCT_COPY_FILES += \
@@ -258,10 +258,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml
 
-# This device is hdpi.  However the platform doesn't
-# currently contain all of the bitmaps at hdpi density so
-# we do this little trick to fall back to the hdpi version
-# if the hdpi doesn't exist.
+# This device is mdpi.  However the platform doesn't
+# currently contain all of the bitmaps at mdpi density so
+# we do this little trick to fall back to the mdpi version
+# if the mdpi doesn't exist.
 PRODUCT_AAPT_CONFIG := normal mdpi hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 
@@ -279,3 +279,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp \
     wifi.interface=wlan0 \
     ro.sf.lcd_density=240
+
+#512MB ram devices(https://source.android.com/devices/low-ram.html)
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.low_ram=true
+

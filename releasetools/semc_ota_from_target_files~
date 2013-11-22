@@ -180,8 +180,7 @@ class Item:
 
     for line in output.split("\n"):
       if not line: continue
-      columns = line.split()
-      name, uid, gid, mode = columns[:4]
+      name, uid, gid, mode = line.split()
       i = cls.ITEMS.get(name, None)
       if i is not None:
         i.uid = int(uid)
@@ -873,4 +872,3 @@ if __name__ == '__main__':
     print "   ERROR: %s" % (e,)
     print
     sys.exit(1)
-

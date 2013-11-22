@@ -115,6 +115,7 @@ lib/libcflashdriver.so
 lib/libclientgps.so
 lib/libcn.so
 lib/libcops.so
+lib/libemoji.so
 lib/libface.so
 lib/libidd.so
 lib/libiddjni.so
