@@ -2,10 +2,12 @@ Unoficial CM-11 for Sony Xperia U
 
 Getting Started :
 
-    mkdir cm-11
+    curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > /root/bin/repo
+    chmod 755 /root/bin/repo
+	mkdir cm-11
     cd cm-11
     repo init -u git://github.com/CyanogenMod/android.git -b cm-11.0
-    repo sync -j16
+    repo sync
     cd device
     mkdir sony
     cd sony
@@ -26,38 +28,35 @@ Now connect your phone which have runing FXP CM10 :
 
 Patch android source code :
 
-    sudo patch -p1 < device/sony/kumquat/patches/framework_av.patch
-    sudo patch -p1 < device/sony/kumquat/patches/framework_native.patch
-    sudo patch -p1 < device/sony/kumquat/patches/hardware_libhardware.patch
-    sudo patch -p1 < device/sony/kumquat/patches/hardware_libhardware_legacy.patch
-    sudo patch -p1 < device/sony/kumquat/patches/system_core.patch
-    sudo patch -p1 < device/sony/kumquat/patches/system_netd.patch
-         patch -p1 < device/sony/kumquat/patches/framework_base.patch
-         patch -p1 < device/sony/kumquat/patches/bionic.patch
-         patch -p1 < device/sony/kumquat/patches/bootable_recovery.patch
+    patch -p1 < device/sony/lotus/patches/framework_av.patch
+    patch -p1 < device/sony/lotus/patches/framework_native.patch
+    patch -p1 < device/sony/lotus/patches/framework_base.patch
+    patch -p1 < device/sony/lotus/patches/hardware_libhardware.patch
+    patch -p1 < device/sony/lotus/patches/hardware_libhardware_legacy.patch
+    patch -p1 < device/sony/lotus/patches/system_core.patch
+    patch -p1 < device/sony/lotus/patches/bionic.patch
+    patch -p1 < device/sony/lotus/patches/bootable_recovery.patch
 
-Our step is optional!!! Use only if you going to sync CM source code daily, than simple revert each patch before you sync CM source code :
+Our step is optional!!! Use only if you going to sync CM 11 source code daily, than simple revert each patch before you sync CM 11 source code :
 
-    sudo patch -p1 -R < device/sony/kumquat/patches/framework_av.patch
-    sudo patch -p1 -R < device/sony/kumquat/patches/framework_native.patch
-    sudo patch -p1 -R < device/sony/kumquat/patches/hardware_libhardware.patch
-    sudo patch -p1 -R < device/sony/kumquat/patches/hardware_libhardware_legacy.patch
-    sudo patch -p1 -R < device/sony/kumquat/patches/system_core.patch
-    sudo patch -p1 -R < device/sony/kumquat/patches/system_netd.patch
-         patch -p1 -R < device/sony/kumquat/patches/bionic.patch
-         patch -p1 -R < device/sony/kumquat/patches/framework_base.patch
-         patch -p1 -R < device/sony/kumquat/patches/bootable_recovery.patch
+    patch -p1 -R < device/sony/lotus/patches/framework_av.patch
+    patch -p1 -R < device/sony/lotus/patches/framework_native.patch
+    patch -p1 -R < device/sony/lotus/patches/framework_base.patch
+    patch -p1 -R < device/sony/lotus/patches/hardware_libhardware.patch
+    patch -p1 -R < device/sony/lotus/patches/hardware_libhardware_legacy.patch
+    patch -p1 -R < device/sony/lotus/patches/system_core.patch
+    patch -p1 -R < device/sony/lotus/patches/bionic.patch
+    patch -p1 -R < device/sony/lotus/patches/bootable_recovery.patch
     repo forall -p -c 'git checkout -f'
     repo sync
-    sudo patch -p1 < device/sony/kumquat/patches/framework_av.patch
-    sudo patch -p1 < device/sony/kumquat/patches/framework_native.patch
-    sudo patch -p1 < device/sony/kumquat/patches/hardware_libhardware.patch
-    sudo patch -p1 < device/sony/kumquat/patches/hardware_libhardware_legacy.patch
-    sudo patch -p1 < device/sony/kumquat/patches/system_core.patch
-    sudo patch -p1 < device/sony/kumquat/patches/system_netd.patch
-         patch -p1 < device/sony/kumquat/patches/bionic.patch
-         patch -p1 < device/sony/kumquat/patches/framework_base.patch
-         patch -p1 < device/sony/kumquat/patches/bootable_recovery.patch
+    patch -p1 < device/sony/lotus/patches/framework_av.patch
+    patch -p1 < device/sony/lotus/patches/framework_native.patch
+    patch -p1 < device/sony/lotus/patches/framework_base.patch
+    patch -p1 < device/sony/lotus/patches/hardware_libhardware.patch
+    patch -p1 < device/sony/lotus/patches/hardware_libhardware_legacy.patch
+    patch -p1 < device/sony/lotus/patches/system_core.patch
+    patch -p1 < device/sony/lotus/patches/bionic.patch
+    patch -p1 < device/sony/lotus/patches/bootable_recovery.patch
 
 Download CM prebuilts :
    cd vendor/cm

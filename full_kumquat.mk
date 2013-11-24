@@ -38,6 +38,7 @@ $(call inherit-product, device/sony/kumquat/kumquat.mk)
 # Set those variables here to overwrite the inherited values.
 PRODUCT_NAME := full_kumquat
 PRODUCT_DEVICE := kumquat
-PRODUCT_BRAND := Sony
-PRODUCT_MANUFACTURER := Sony
+PRODUCT_BRAND := Android
 PRODUCT_MODEL := Xperia U
+PRODUCT_MANUFACTURER := Sony
+#PRODUCT_RESTRICT_VENDOR_FILES := owner path

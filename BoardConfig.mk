@@ -4,11 +4,7 @@ USE_CAMERA_STUB := true
 -include vendor/sony/kumquat/BoardConfigVendor.mk
 
 TARGET_SPECIFIC_HEADER_PATH := \
-    device/sony/kumquat/include \
-    device/sony/kumquat/hardware \
-    hardware/semc/bluetooth/glib \
-    hardware/semc/bluetooth/bluez/lib \
-    hardware/semc/bluetooth/bluez/btio
+    device/sony/kumquat/include
 
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
@@ -43,18 +39,22 @@ BOARD_USES_GENERIC_AUDIO := false
 BOARD_USES_ALSA_AUDIO := true
 COMMON_GLOBAL_CFLAGS += -DSTE_AUDIO
 # hack for audio
-COMMON_GLOBAL_CFLAGS += -DMR0_AUDIO_BLOB
+COMMON_GLOBAL_CFLAGS += -DMR0_AUDIO_BLOB -DMR1_AUDIO_BLOB
 # seems needed for sink latency
-BOARD_USES_LIBMEDIA_WITH_AUDIOPARAMETER := true 
+BOARD_USES_LIBMEDIA_WITH_AUDIOPARAMETER := true
+# kitkat
+BOARD_HAVE_PRE_KITKAT_AUDIO_BLOB := true
 
 # WIFI
-BOARD_WLAN_DEVICE := cw1200
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := private_lib_nl80211_cmd
 BOARD_HOSTAPD_DRIVER := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB := private_lib_nl80211_cmd
-BOARD_SOFTAP_DEVICE_TI := NL80211
+USES_TI_MAC80211 := true
+COMMON_GLOBAL_CFLAGS += -DUSES_TI_MAC80211
+BOARD_WLAN_DEVICE := wl12xx_mac80211
+BOARD_SOFTAP_DEVICE := wl12xx_mac80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wl12xx
+BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_wl12xx
 
 # Graphics
 USE_OPENGL_RENDERER := true
@@ -92,11 +92,17 @@ BOARD_HAS_SDCARD_INTERNAL := true
 BOARD_USES_MMCUTILS := true
 BOARD_HAS_NO_MISC_PARTITION := true
 
-# Cwm specific 
+# cwm specific
+RECOVERY_NAME := CWM-Kumquat
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/sony/kumquat/recovery/recovery-keys.c
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"lucidaconsole_10x18.h\"
 TARGET_RECOVERY_FSTAB = device/sony/kumquat/prebuilt/root/fstab.st-ericsson
 RECOVERY_FSTAB_VERSION := 2
+
+# uncoment to enable back button in cwm (only if you commented XPERIA_CWM_TOUCH)
+#BOARD_HAS_NO_SELECT_BUTTON := true
+# coment this if you no want xperia touch enabled cwm
+COMMON_GLOBAL_CFLAGS += -DXPERIA_CWM_TOUCH
 
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/musb-ux500.0/musb-hdrc/gadget/lun%d/file"
 
@@ -111,7 +117,6 @@ BOARD_KERNEL_CMDLINE := cachepolicy=writealloc noinitrd init=init board_id=1 log
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000
 
 # Partition information
-BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true 
 BOARD_VOLD_MAX_PARTITIONS := 16
 
 # partition size is dec=16777216 hex=01000000 so 0x01000000 is correct one!
@@ -124,7 +129,6 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 COMMON_GLOBAL_CFLAGS += -DNEW_NOTIFICATION
 
-BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_USERIMAGES_USE_EXT4 := true
 
 BOARD_SDCARD_INTERNAL_DEVICE := /dev/block/mmcblk0p14

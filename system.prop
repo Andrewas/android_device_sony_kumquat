@@ -1,5 +1,6 @@
 rild.libpath=/system/lib/libu300-ril.so
 rild.libargs=-c UNIX -n 2 -p /dev/socket/at_core -s /dev/socket/at_core -i rmnet
+ro.telephony.ril_class=SonyU8500RIL
 
 # The OpenGL ES API level that is natively supported by this device.
 # This is a 16.16 fixed point number
@@ -9,14 +10,10 @@ ro.opengles.version=131072
 # debug.sf.hw=1 Use Mali as compositor in SurfaceFlinger
 debug.sf.hw=1
 
-#cm11 fix
+# cm 11 bootloop fix
 ro.zygote.disable_gl_preload=1
 ro.bq.gpu_to_cpu_unsupported=1
 debug.hwui.render_dirty_regions=false
-
-#ADB
-ro.debuggable=1
-persist.sys.usb.config=adb
 
 # Android defaults EGL preserved swap behaviour
 # This gives bad performace for deferred renderers
@@ -40,10 +37,6 @@ ro.telephony.call_ring.multiple=false
 # prop to indicate what kind of external memory the product have.
 ro.semc.product.user_storage=emmc_only
 ro.build.characteristics=nosdcard
-
-#RIL
-
-ro.telephony.ril_class=SonyU8500RIL
 
 #STE: Hardware video codecs configuration
 ste.video.dec.mpeg4.in.size=8192

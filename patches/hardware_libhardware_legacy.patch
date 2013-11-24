@@ -5,7 +5,6 @@
 #       modified:   include/hardware_legacy/AudioPolicyInterface.h
 #       modified:   include/hardware_legacy/AudioPolicyManagerBase.h
 #       modified:   include/hardware_legacy/AudioSystemLegacy.h
-#       modified:   wifi/wifi.c
 diff --git a/hardware/libhardware_legacy/audio/AudioPolicyCompatClient.cpp b/hardware/libhardware_legacy/audio/AudioPolicyCompatClient.cpp
 index 162968c..f6e67b6 100644
 --- a/hardware/libhardware_legacy/audio/AudioPolicyCompatClient.cpp
@@ -91,7 +90,7 @@ index e974aeb..94dcdec 100644
      // only accept input with the exact requested set of parameters
      if (input == 0 ||
 diff --git a/hardware/libhardware_legacy/audio/audio_policy_hal.cpp b/hardware/libhardware_legacy/audio/audio_policy_hal.cpp
-index 545d177..dbb058a 100644
+index 545d177..bbda520 100644
 --- a/hardware/libhardware_legacy/audio/audio_policy_hal.cpp
 +++ b/hardware/libhardware_legacy/audio/audio_policy_hal.cpp
 @@ -177,11 +177,20 @@ static audio_io_handle_t ap_get_input(struct audio_policy *pol, audio_source_t i
@@ -115,17 +114,6 @@ index 545d177..dbb058a 100644
  }
  
  static int ap_start_input(struct audio_policy *pol, audio_io_handle_t input)
-@@ -378,8 +387,10 @@ static int create_legacy_ap(const struct audio_policy_device *device,
-     lap->policy.is_stream_active = ap_is_stream_active;
- #ifndef ICS_AUDIO_BLOB
- #ifndef MR1_AUDIO_BLOB
-+#ifndef MR0_AUDIO_BLOB
-     lap->policy.is_stream_active_remotely = ap_is_stream_active_remotely;
- #endif
-+#endif
-     lap->policy.is_source_active = ap_is_source_active;
- #endif
-     lap->policy.dump = ap_dump;
 diff --git a/hardware/libhardware_legacy/include/hardware_legacy/AudioPolicyInterface.h b/hardware/libhardware_legacy/include/hardware_legacy/AudioPolicyInterface.h
 index 7847bdd..b82de09 100644
 --- a/hardware/libhardware_legacy/include/hardware_legacy/AudioPolicyInterface.h
@@ -202,23 +190,3 @@ index b0ca0b3..2239c36 100644
      //
      // AudioPolicyService interface
      //
-diff --git a/hardware/libhardware_legacy/wifi/wifi.c b/hardware/libhardware_legacy/wifi/wifi.c
-index 5663c6d..270912a 100644
---- a/hardware/libhardware_legacy/wifi/wifi.c
-+++ b/hardware/libhardware_legacy/wifi/wifi.c
-@@ -471,6 +471,7 @@ int update_ctrl_interface(const char *config_file) {
-                 memmove(iptr + mlen, iptr + ilen + 1, nread - (iptr + ilen + 1 - pbuf));
-                 memset(iptr, '\n', mlen);
-                 memcpy(iptr, ifc, strlen(ifc));
-+#if 0
-                 destfd = TEMP_FAILURE_RETRY(open(config_file, O_RDWR, 0660));
-                 if (destfd < 0) {
-                     ALOGE("Cannot update \"%s\": %s", config_file, strerror(errno));
-@@ -479,6 +480,7 @@ int update_ctrl_interface(const char *config_file) {
-                 }
-                 TEMP_FAILURE_RETRY(write(destfd, pbuf, nread + mlen - ilen -1));
-                 close(destfd);
-+#endif
-             }
-         }
-     }

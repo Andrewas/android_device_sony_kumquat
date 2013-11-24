@@ -16,4 +16,3 @@
 
 # USB Disk
 /devices/platform/musb-ux500.0/musb-hdrc    /storage/usbdisk  auto      defaults                                                                                 wait,voldmanaged=usbdisk:auto
-

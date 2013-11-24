@@ -23,17 +23,12 @@
 #include "recovery_ui.h"
 #include "common.h"
 #include "extendedcommands.h"
-
-extern int __system(const char *command);
-static int buttonlight = 0;
+#include "adefines.h"
 
 int device_toggle_display(volatile char* key_pressed, int key_code) {
     // hold power and press volume-up
     return key_pressed[KEY_POWER] && key_code == KEY_VOLUMEUP;
 }
-
-#define VIBRATOR_TIMEOUT_FILE "/sys/class/timed_output/vibrator/enable"
-#define VIBRATOR_TIME_MS  10
 
 int vibrate(int timeout_ms) {
     char str[20];
@@ -58,37 +53,42 @@ int device_handle_key(int key_code, int visible) {
 
     if (visible) {
 
-        if (!buttonlight) {
-            __system("/sbin/echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/button-backlight/brightness");
-
-            buttonlight = 1;
-        }
-
         switch (key_code) {
             case KEY_CAPSLOCK:
             case KEY_DOWN:
-            case KEY_VOLUMEDOWN:
+#ifndef XPERIA_CWM_TOUCH
             case KEY_MENU:
+#endif
                 vibrate(VIBRATOR_TIME_MS);
+                return HIGHLIGHT_DOWN;
+
+            case KEY_VOLUMEDOWN:
                 return HIGHLIGHT_DOWN;
 
             case KEY_LEFTSHIFT:
             case KEY_UP:
-            case KEY_VOLUMEUP:
                 vibrate(VIBRATOR_TIME_MS);
                 return HIGHLIGHT_UP;
 
+            case KEY_VOLUMEUP:
+                return HIGHLIGHT_UP;
+
             case KEY_POWER:
+#ifndef XPERIA_CWM_TOUCH
                 if (ui_get_showing_back_button()) {
-                    vibrate(VIBRATOR_TIME_MS);
+#endif
                     return SELECT_ITEM;
+#ifndef XPERIA_CWM_TOUCH
                 }
                 if (!ui_root_menu) {
-                    vibrate(VIBRATOR_TIME_MS);
                     return GO_BACK;
                 }
+#endif
                 break;
+
+#ifndef XPERIA_CWM_TOUCH
             case KEY_HOME:
+#endif
             case KEY_LEFTBRACE:
             case KEY_ENTER:
             case BTN_MOUSE:
@@ -97,6 +97,7 @@ int device_handle_key(int key_code, int visible) {
             case KEY_SEND:
                 vibrate(VIBRATOR_TIME_MS);
                 return SELECT_ITEM;
+
             case KEY_END:
             case KEY_BACKSPACE:
             case KEY_SEARCH:
@@ -108,11 +109,13 @@ int device_handle_key(int key_code, int visible) {
                     vibrate(VIBRATOR_TIME_MS);
                     return GO_BACK;
                 }
+#ifndef XPERIA_CWM_TOUCH
             case KEY_BACK:
                 if (!ui_root_menu) {
                     vibrate(VIBRATOR_TIME_MS);
                     return GO_BACK;
                 }
+#endif
         }
     }
 

@@ -33,7 +33,7 @@ PRODUCT_PACKAGES += \
 
 # Netlink
 PRODUCT_PACKAGES += \
-    libnl
+    libnl_2
 
 # Dbus
 PRODUCT_PACKAGES += \
@@ -158,6 +158,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/system/etc/wifi/hostapd.conf:system/etc/wifi/hostapd.conf \
     $(LOCAL_PATH)/prebuilt/system/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
     $(LOCAL_PATH)/prebuilt/system/etc/wifi/p2p_supplicant.conf:system/etc/wifi/p2p_supplicant.conf \
+    $(LOCAL_PATH)/prebuilt/system/etc/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
+    $(LOCAL_PATH)/prebuilt/system/etc/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/prebuilt/system/etc/init.d/01stesetup:system/etc/init.d/01stesetup \
     $(LOCAL_PATH)/prebuilt/system/etc/init.d/10dhcpcd:system/etc/init.d/10dhcpcd \
     $(LOCAL_PATH)/prebuilt/system/etc/init.d/10hostapd:system/etc/init.d/10hostapd \
@@ -170,8 +172,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/root/init.rc:root/init.rc \
     $(LOCAL_PATH)/prebuilt/root/fstab.st-ericsson:root/fstab.st-ericsson \
     $(LOCAL_PATH)/prebuilt/root/init.st-ericsson.rc:root/init.st-ericsson.rc \
-    $(LOCAL_PATH)/prebuilt/root/ueventd.st-ericsson.rc:root/ueventd.st-ericsson.rc \
-    $(LOCAL_PATH)/prebuilt/root/init.environ.rc:root/init.environ.rc
+    $(LOCAL_PATH)/prebuilt/root/ueventd.st-ericsson.rc:root/ueventd.st-ericsson.rc
 
 # Recovery bootstrap script
 PRODUCT_COPY_FILES += \
@@ -188,8 +189,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/system/etc/ste_modem.sh:system/etc/ste_modem.sh
 
 # WiFi config utility
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/system/bin/iw:system/bin/iw \
+PRODUCT_PACKAGES += \
+    iw
 
 # GPS
 PRODUCT_COPY_FILES += \
@@ -283,4 +284,3 @@ PRODUCT_PROPERTY_OVERRIDES += \
 #512MB ram devices(https://source.android.com/devices/low-ram.html)
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.config.low_ram=true
-
