@@ -183,12 +183,22 @@ on post-fs-data
     ### WIFI THINGS ###
     # give system access to wpa_supplicant.conf for backup and restore
     mkdir /data/misc/wifi 0770 wifi wifi
+    chmod 0770 /data/misc/wifi
+    chown wifi wifi /data/misc/wifi
 
     # CTRL_IFACE_CLIENT_DIR
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    chmod 0770 /data/misc/wifi/sockets
+    chown wifi wifi /data/misc/wifi/sockets
 
     # CTRL_IFACE_DIR
-    mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
+    # wpa_supplicant socket (unix socket mode)
+    mkdir /data/misc/wifi/wpa_supplicant 0771 wifi wifi
+    chmod 0771 /data/misc/wifi/wpa_supplicant
+    chown wifi wifi /data/misc/wifi/wpa_supplicant
+
+    chmod 0660 /data/misc/wifi/wpa_supplicant.conf
+    chown wifi wifi /data/misc/wifi/wpa_supplicant.conf
 
     # Setup paths used for socket communication with the wpa supplicant.
     mkdir /data/system 0775 system system
@@ -196,6 +206,8 @@ on post-fs-data
 
     # Create the symlink to wpa_supplicant folder for wpa_supplicant
     symlink /data/misc/wifi/wpa_supplicant /data/system/wpa_supplicant
+    chmod 0771 /data/system/wpa_supplicant
+    chown wifi wifi /data/system/wpa_supplicant
 
     # is needed ?
     mkdir /data/misc/wifi/hostap 0770 wifi wifi
@@ -462,8 +474,7 @@ service p2p_supplicant /system/bin/wpa_supplicant \
     -puse_p2p_group_interface=1 \
     -e/data/misc/wifi/entropy.bin -ddd
     class main
-    user root
-    group wifi
+    group system wifi inet
     disabled
     oneshot
 
@@ -472,8 +483,7 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf \
     -e/data/misc/wifi/entropy.bin -ddd
     class main
-    user root
-    group wifi
+    group system wifi inet
     disabled
     oneshot
 
@@ -485,11 +495,13 @@ service hostapd_bin /system/bin/hostapd -d /data/misc/wifi/hostapd.conf
 
 service dhcpcd_wlan0 /system/bin/dhcpcd -aABDKL
     class main
+    group system dhcp
     disabled
     oneshot
 
 service dhcpcd_p2p /system/bin/dhcpcd -aABKL
     class main
+    group system dhcp
     disabled
     oneshot
 
@@ -500,11 +512,13 @@ service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
 
 service iprenew_wlan0 /system/bin/dhcpcd -n
     class main
+    group system dhcp
     disabled
     oneshot
 
 service iprenew_p2p /system/bin/dhcpcd -n
     class main
+    group system dhcp
     disabled
     oneshot
 
