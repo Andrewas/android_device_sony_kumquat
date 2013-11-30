@@ -687,11 +687,3 @@ service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0
 service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
     class late_start
     disabled
-
-#service logcatgrab /sbin/logcat_grab
-#    class main
-#    user root
-#    group system
-#    disabled
-#    oneshot
-
