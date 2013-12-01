@@ -125,6 +125,11 @@ PRODUCT_PACKAGES += \
     audio_policy.default \
     audio.usb.default
 
+# Screen recorder
+PRODUCT_PACKAGES += \
+    ScreenRecorder \
+    libscreenrecorder
+
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
