@@ -169,7 +169,7 @@ include $(BUILD_SHARED_LIBRARY)
 # lib_net_iface_cmd
 #
 include $(CLEAR_VARS)
-SRC := bcmdhd_net_iface
+SRC := wifi/bcmdhd_net_iface
 LOCAL_SRC_FILES := \
     ${SRC}/bcmdhd_net_iface.c
 LOCAL_MODULE := libnetcmdiface
@@ -181,7 +181,7 @@ include $(BUILD_SHARED_LIBRARY)
 # iw
 #
 include $(CLEAR_VARS)
-SRC := iw_util
+SRC := wifi/iw_util
 NO_PKG_CONFIG=y
 LOCAL_SRC_FILES := \
     ${SRC}/bitrate.c \
@@ -216,7 +216,7 @@ LOCAL_SRC_FILES := \
     ${SRC}/android-nl.c
 
 LOCAL_C_INCLUDES := \
-	$(LOCAL_PATH)/iw \
+	$(LOCAL_PATH)/wifi/iw_util \
 	external/libnl-headers
 
 LOCAL_CFLAGS := -O2 -g -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs
@@ -227,6 +227,17 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_STATIC_LIBRARIES := libnl_2 libc libstdc++ libm
 LOCAL_FORCE_STATIC_EXECUTABLE := true
 LOCAL_MODULE:=iw
+include $(BUILD_EXECUTABLE)
+
+include $(CLEAR_VARS)
+SRC := wifi/hostapd_patcher
+LOCAL_SRC_FILES := $(SRC)/hostapd_patcher.c
+LOCAL_CFLAGS := -O2 -g -Wall -Wundef -Werror-implicit-function-declaration
+LOCAL_MODULE_PATH := $(TARGET_OUT_EXECUTABLES)
+LOCAL_MODULE_TAGS := optional
+LOCAL_SHARED_LIBRARIES := liblog
+LOCAL_STATIC_LIBRARIES := libcrecovery
+LOCAL_MODULE:=hostapdpatcher
 include $(BUILD_EXECUTABLE)
 
 endif # BOARD_USES_STE_HARDWARE
