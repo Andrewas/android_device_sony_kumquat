@@ -48,9 +48,9 @@ ste.video.dec.recycle.delay=1
 ste.special_fast_dormancy=false
 
 #Limitation on how much hwmem MM codecs should use
-ste.video.decoder.max.hwmem=0x3600000
-ste.video.decoder.max.res=1080p
-ste.video.decoder.h264.max.lev=4.2
+ste.video.decoder.max.hwmem=0x2600000
+ste.video.decoder.max.res=720p
+ste.video.decoder.h264.max.lev=3.2
 
 # System props for audio
 persist.audio.hp=true
