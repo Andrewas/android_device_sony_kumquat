@@ -11,7 +11,7 @@ Getting Started :
     cd device
     mkdir sony
     cd sony
-    git clone https://github.com/Andrewas/android_device_sony_kumquat.git -b cm11 kumquat
+    git clone https://github.com/Andrewas/android_device_sony_kumquat.git -b cm-11.0 kumquat
     cd kumquat
 
 Now connect your phone which have runing CM11 :
