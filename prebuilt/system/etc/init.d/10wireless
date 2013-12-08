@@ -11,7 +11,7 @@ if [ ! -f /data/misc/wifi/hostapd.conf ]; then
     chmod 660 /data/misc/wifi/hostapd.conf
 fi
 
-# create ipconfig.txt if not exisr - needed for WifiConfigStore
+# create ipconfig.txt if not exist - needed for WifiConfigStore
 if [ ! -f /data/misc/wifi/ipconfig.txt ]; then
      touch /data/misc/wifi/ipconfig.txt
      chown system.wifi /data/misc/wifi/ipconfig.txt

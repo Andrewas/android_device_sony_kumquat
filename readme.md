@@ -14,7 +14,7 @@ Getting Started :
     git clone https://github.com/Andrewas/android_device_sony_kumquat.git -b cm11 kumquat
     cd kumquat
 
-Now connect your phone which have runing FXP CM10 :
+Now connect your phone which have runing CM11 :
 
     ./extract-files.sh
     cd ../../..
@@ -36,6 +36,7 @@ Patch android source code :
     patch -p1 < device/sony/kumquat/patches/system_core.patch
     patch -p1 < device/sony/kumquat/patches/bionic.patch
     patch -p1 < device/sony/kumquat/patches/bootable_recovery.patch
+    patch -p1 < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
 
 Our step is optional!!! Use only if you going to sync CM 11 source code daily, than simple revert each patch before you sync CM 11 source code :
 
@@ -47,6 +48,7 @@ Our step is optional!!! Use only if you going to sync CM 11 source code daily, t
     patch -p1 -R < device/sony/kumquat/patches/system_core.patch
     patch -p1 -R < device/sony/kumquat/patches/bionic.patch
     patch -p1 -R < device/sony/kumquat/patches/bootable_recovery.patch
+    patch -p1 -R < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
     repo forall -p -c 'git checkout -f'
     repo sync
     patch -p1 < device/sony/kumquat/patches/framework_av.patch
@@ -57,6 +59,7 @@ Our step is optional!!! Use only if you going to sync CM 11 source code daily, t
     patch -p1 < device/sony/kumquat/patches/system_core.patch
     patch -p1 < device/sony/kumquat/patches/bionic.patch
     patch -p1 < device/sony/kumquat/patches/bootable_recovery.patch
+    patch -p1 < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
 
 Download CM prebuilts :
    cd vendor/cm
