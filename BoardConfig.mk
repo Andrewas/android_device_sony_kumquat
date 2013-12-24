@@ -56,7 +56,7 @@ BOARD_HOSTAPD_PRIVATE_LIB := private_lib_nl80211_cmd
 
 # Graphics
 USE_OPENGL_RENDERER := true
-BOARD_EGL_CFG := device/sony/lotus/prebuilt/system/lib/egl/egl.cfg
+BOARD_EGL_CFG := device/sony/kumquat/prebuilt/system/lib/egl/egl.cfg
 COMMON_GLOBAL_CFLAGS += -DSTE_HARDWARE
 
 # kitkat libui
