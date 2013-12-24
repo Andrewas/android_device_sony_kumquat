@@ -37,6 +37,7 @@ Patch android source code :
     patch -p1 < device/sony/kumquat/patches/bionic.patch
     patch -p1 < device/sony/kumquat/patches/bootable_recovery.patch
     patch -p1 < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
+    patch -p1 < device/sony/kumquat/patches/packages_apps_Bluetooth.patch
 
 Our step is optional!!! Use only if you going to sync CM 11 source code daily, than simple revert each patch before you sync CM 11 source code :
 
@@ -49,8 +50,11 @@ Our step is optional!!! Use only if you going to sync CM 11 source code daily, t
     patch -p1 -R < device/sony/kumquat/patches/bionic.patch
     patch -p1 -R < device/sony/kumquat/patches/bootable_recovery.patch
     patch -p1 -R < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
+    patch -p1 -R < device/sony/kumquat/patches/packages_apps_Bluetooth.patch
     repo forall -p -c 'git checkout -f'
     repo sync
+    Patch android source code :
+
     patch -p1 < device/sony/kumquat/patches/framework_av.patch
     patch -p1 < device/sony/kumquat/patches/framework_native.patch
     patch -p1 < device/sony/kumquat/patches/framework_base.patch
@@ -60,6 +64,7 @@ Our step is optional!!! Use only if you going to sync CM 11 source code daily, t
     patch -p1 < device/sony/kumquat/patches/bionic.patch
     patch -p1 < device/sony/kumquat/patches/bootable_recovery.patch
     patch -p1 < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
+    patch -p1 < device/sony/kumquat/patches/packages_apps_Bluetooth.patch
 
 Download CM prebuilts :
    cd vendor/cm

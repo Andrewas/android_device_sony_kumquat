@@ -56,11 +56,14 @@ BOARD_HOSTAPD_PRIVATE_LIB := private_lib_nl80211_cmd
 
 # Graphics
 USE_OPENGL_RENDERER := true
-BOARD_EGL_CFG := device/sony/kumquat/prebuilt/system/lib/egl/egl.cfg
+BOARD_EGL_CFG := device/sony/lotus/prebuilt/system/lib/egl/egl.cfg
 COMMON_GLOBAL_CFLAGS += -DSTE_HARDWARE
 
-# kitkat
+# kitkat libui
 BOARD_HAVE_PIXEL_FORMAT_INFO := true
+
+# libbinder - testing only
+#BOARD_NEEDS_MEMORYHEAPPMEM := true
 
 # libutils backward compatibility for hals
 COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
@@ -71,6 +74,10 @@ COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB
 # surfaceflinger support for Xperia Sola,Go...
 BOARD_EGL_NEEDS_LEGACY_FB := true
 COMMON_GLOBAL_CFLAGS += -DEGL_NEEDS_FNW
+# surfaceflinger - testing only
+#TARGET_DISABLE_TRIPLE_BUFFERING := true
+#NUM_FRAMEBUFFER_SURFACE_BUFFERS := 2
+#TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # Fm Radio
 #BOARD_USES_STE_FM := true

@@ -425,25 +425,30 @@ service admsrv /system/bin/admsrv
     ioprio rt 4
     capability NET_ADMIN NET_RAW SYS_NICE
 
-service hdmid /system/bin/hdmid
+service hciattach /system/bin/logwrapper /system/bin/hciattach -a 23 -n -s 115200 /dev/ttyAMA0 cg2900 115200 flow
     class main
-    socket hdmid stream 0660 system graphics
+    user root
+    group bluetooth net_bt_admin net_admin misc root
     oneshot
 
-service bluetoothd /system/bin/logwrapper /system/bin/bluetoothd -d -n
+on propery:init.svc.hciattach=running
+    exec /system/bin/cg2900-channel_init.sh
+
+service bluetoothd /system/bin/logwrapper /system/bin/bluetoothd
     class main
     socket bluetooth stream 660 bluetooth bluetooth
     socket dbus_bluetooth stream 660 bluetooth bluetooth
     # init.rc does not yet support applying capabilities, so run as root and
     # let bluetoothd drop uid to bluetooth with the right linux capabilities
-    group bluetooth net_bt_admin misc radio
+    group bluetooth net_bt_admin misc net_admin radio
     disabled
-
-service ste-cg29xx_ctrl /system/xbin/ste-cg29xx_ctrl -b 115200 -p 6 -l 23 -i /system/bin/cg2900-channel_init.sh /dev/ttyAMA0
-    class main
-    user root
-    group bluetooth net_bt_admin misc root
     oneshot
+
+on property:init.svc.bluetoothd=stopped
+    write /sys/class/rfkill/rfkill1/state 0
+
+on property:init.svc.bluetoothd=running
+    write /sys/class/rfkill/rfkill1/state 1
 
 service pand /system/bin/logwrapper /system/bin/pand -s -n -M -A -E -r NAP -u /system/bin/blue-up.sh
     class main
@@ -533,6 +538,11 @@ service initial_regdom /system/bin/iw reg set US
 on property:wlan.driver.status=ok
     start initial_regdom
     exec /system/bin/hostapdpatcher
+    write /sys/class/rfkill/rfkill0/state 1
+
+# power down wifi interface
+on property:wlan.driver.status=unloaded
+    write /sys/class/rfkill/rfkill0/state 0
 
 on property:init.svc.p2p_supplicant=stopped
     start initial_regdom
@@ -617,13 +627,6 @@ service usbid_init /system/bin/usbid_init.sh
     class main
     oneshot
 
-service hdmiproxyd /system/bin/hdmiproxyd
-    class main
-    user system
-    group graphics
-    socket hdmid stream 0660 system system
-    socket hdmic stream 0660 system system
-
 # SEMC: TrimArea Daemon
 service tad /system/bin/tad /dev/block/mmcblk0 9,4,256
     user root
@@ -642,32 +645,16 @@ service updatemiscta /system/bin/updatemiscta
     user root
     oneshot
 
-service media /system/bin/logwrapper /system/bin/mediaserver
-    class main
-    user root
-    group system audio camera inet net_bt net_bt_admin net_bw_acct drmrpc input sdcard_rw shell
-    ioprio rt 4
-
 #SEMC: modemcatcher
 service modemcatcher /system/bin/modemcatcher -f
     class main
     user root
     socket modemcatcher stream 0660 root root
 
-# SEMC System monitor
-service system_monitor /system/bin/system_monitor
-    socket sysmon stream 0660 root system
-    class core
-    user root
-
 # SEMC Battery real capacity updater
 service batcap /system/bin/batcap
     class main
     user root
-    oneshot
-
-service kexec /system/xbin/kexec.dyn -p
-    class main
     oneshot
 
 service hw_config /system/bin/sh /system/etc/hw_config.sh
@@ -681,11 +668,6 @@ service suntrold /system/bin/suntrold
     user system
     group system
     oneshot
-
-# Native helper for SuperStamina
-service xssm /system/bin/xssm
-    class main
-    socket xssm stream 0660 root system
 
 service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0 /storage/sdcard0
     class late_start

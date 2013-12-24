@@ -71,14 +71,14 @@
 /sys/bus/i2c/devices/2-0040/als_on 0666 system system
 
 /sys/devices/platform/musb-ux500.0/musb-hdrc/usb* uevent 0660 root usb
-/dev/input/event10                                 0666 system system
-/sys/bus/i2c/devices/2-0037/als                    0666 system system
-/sys/bus/i2c/devices/2-0036/als_enable             0666 system system
-/sys/bus/i2c/devices/2-0053/status                 0666 system system
-/sys/bus/i2c/devices/2-0053/torch_enable           0666 system system
-/sys/devices/av8100_hdmi* disponoff                0660 root system
-/sys/devices/av8100_hdmi* hdmisdtvswitch           0660 root system
-/dev/hdmi                                          0660 root system
+/dev/input/event10                            0666 system system
+/sys/bus/i2c/devices/2-0037/als               0666 system system
+/sys/bus/i2c/devices/2-0036/als_enable        0666 system system
+/sys/bus/i2c/devices/2-0053/status            0666 system system
+/sys/bus/i2c/devices/2-0053/torch_enable      0666 system system
+/sys/devices/av8100_hdmi* disponoff           0660 root system
+/sys/devices/av8100_hdmi* hdmisdtvswitch      0660 root system
+/dev/hdmi                                     0660 root system
 
 # Bluetooth
 /sys/devices/platform/cg2900.0/cg2900-uart.0/bluetooth/hci0/rfkill* state	 0666 root bluetooth

@@ -23,4 +23,3 @@
     <!-- If there is no sysfs-based control mechanism, enable this -->
     <bool name="useCameraInterface">true</bool>
 </resources>
-

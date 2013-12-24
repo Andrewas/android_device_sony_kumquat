@@ -1,2 +1,1 @@
 add_lunch_combo cm_kumquat-userdebug
-add_lunch_combo cm_kumquat-eng
