@@ -51,22 +51,23 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libasound
 
-# Bluez 5.11 libs
+# Bluez 5.13 libs
 PRODUCT_PACKAGES += \
     libbtio \
     libbluetooth
 
-# Bluez 5.11 daemon, android hal and haltest
+# Bluez 5.13 daemon, android hal and haltest
 PRODUCT_PACKAGES += \
     bluetoothd \
     bluetooth.default \
+    audio.a2dp.default \
     haltest
 
-# Bluez 5.11 btmon
+# Bluez 5.13 btmon
 PRODUCT_PACKAGES += \
     btmon
 
-# Bluez 5.11 tools
+# Bluez 5.13 tools
 PRODUCT_PACKAGES += \
     hciattach \
     hciconfig \
