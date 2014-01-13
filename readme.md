@@ -25,6 +25,7 @@ Now connect your phone which have runing FXP CM10 or CM10.1/CM10.2:
     cd ../..
 
 Patch android source code :
+
     sudo patch -p1 < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
     sudo patch -p1 < device/sony/kumquat/patches/external_wpa_supplicant_8.patch
     sudo patch -p1 < device/sony/kumquat/patches/framework_av.patch
