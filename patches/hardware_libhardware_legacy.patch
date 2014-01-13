@@ -167,7 +167,7 @@ index 1223435..47fe462 100644
          // indicates to the audio policy manager that the input starts being used.
          virtual status_t startInput(audio_io_handle_t input);
 diff --git a/hardware/libhardware_legacy/include/hardware_legacy/AudioSystemLegacy.h b/hardware/libhardware_legacy/include/hardware_legacy/AudioSystemLegacy.h
-index 5904af2..fe40839 100644
+index 5904af2..4e02a43 100644
 --- a/hardware/libhardware_legacy/include/hardware_legacy/AudioSystemLegacy.h
 +++ b/hardware/libhardware_legacy/include/hardware_legacy/AudioSystemLegacy.h
 @@ -377,6 +377,20 @@ public:
@@ -192,10 +192,10 @@ index 5904af2..fe40839 100644
      // AudioPolicyService interface
      //
 diff --git a/hardware/libhardware_legacy/wifi/wifi.c b/hardware/libhardware_legacy/wifi/wifi.c
-index c05a16c..1898e25 100644
+index dacef5e..ca3320a 100644
 --- a/hardware/libhardware_legacy/wifi/wifi.c
 +++ b/hardware/libhardware_legacy/wifi/wifi.c
-@@ -487,6 +487,7 @@ int update_ctrl_interface(const char *config_file) {
+@@ -491,6 +491,7 @@ int update_ctrl_interface(const char *config_file) {
                  memmove(iptr + mlen, iptr + ilen + 1, nread - (iptr + ilen + 1 - pbuf));
                  memset(iptr, '\n', mlen);
                  memcpy(iptr, ifc, strlen(ifc));
@@ -203,7 +203,7 @@ index c05a16c..1898e25 100644
                  destfd = TEMP_FAILURE_RETRY(open(config_file, O_RDWR, 0660));
                  if (destfd < 0) {
                      ALOGE("Cannot update \"%s\": %s", config_file, strerror(errno));
-@@ -495,6 +496,7 @@ int update_ctrl_interface(const char *config_file) {
+@@ -499,6 +500,7 @@ int update_ctrl_interface(const char *config_file) {
                  }
                  TEMP_FAILURE_RETRY(write(destfd, pbuf, nread + mlen - ilen -1));
                  close(destfd);

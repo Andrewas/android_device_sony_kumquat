@@ -1,0 +1,45 @@
+diff --git a/external/wpa_supplicant_8/hostapd/Android.mk b/external/wpa_supplicant_8/hostapd/Android.mk
+index 8585f39..c2df16e 100644
+--- a/external/wpa_supplicant_8/hostapd/Android.mk
++++ b/external/wpa_supplicant_8/hostapd/Android.mk
+@@ -47,7 +47,9 @@ endif
+ # Use Android specific directory for control interface sockets
+ L_CFLAGS += -DCONFIG_CTRL_IFACE_CLIENT_DIR=\"/data/misc/wifi/sockets\"
+ ifdef USES_TI_MAC80211
++L_CFLAGS += -DANDROID
+ L_CFLAGS += -DCONFIG_CTRL_IFACE_DIR=\"/data/system/wpa_supplicant\"
++L_CFLAGS += -DUSES_TI_MAC80211
+ else
+ L_CFLAGS += -DCONFIG_CTRL_IFACE_DIR=\"/data/system/hostapd\"
+ endif
+diff --git a/external/wpa_supplicant_8/hostapd/ctrl_iface.c b/external/wpa_supplicant_8/hostapd/ctrl_iface.c
+index d161ebb..d06077b 100644
+--- a/external/wpa_supplicant_8/hostapd/ctrl_iface.c
++++ b/external/wpa_supplicant_8/hostapd/ctrl_iface.c
+@@ -14,7 +14,7 @@
+ #include <sys/stat.h>
+ #include <stddef.h>
+ 
+-#ifdef USES_TI_MAC80211
++#if defined(USES_TI_MAC80211) || defined(BOARD_TI_SOFTAP)
+ #include <cutils/sockets.h>
+ #endif /* USES_TI_MAC80211 */
+ 
+@@ -1063,7 +1063,7 @@ int hostapd_ctrl_iface_init(struct hostapd_data *hapd)
+ 	if (hapd->conf->ctrl_interface == NULL)
+ 		return 0;
+ 
+-#ifdef USES_TI_MAC80211
++#if defined(USES_TI_MAC80211) || defined(BOARD_TI_SOFTAP)
+         os_snprintf(addr.sun_path, sizeof(addr.sun_path), "wpa_%s",
+                     hapd->conf->ctrl_interface);
+         s = android_get_control_socket(addr.sun_path);
+@@ -1181,7 +1181,7 @@ int hostapd_ctrl_iface_init(struct hostapd_data *hapd)
+ 	}
+ 	os_free(fname);
+ 
+-#ifdef USES_TI_MAC80211
++#if defined(USES_TI_MAC80211) || defined(BOARD_TI_SOFTAP)
+ havesock:
+ #endif /* USES_TI_MAC80211 */
+ 
