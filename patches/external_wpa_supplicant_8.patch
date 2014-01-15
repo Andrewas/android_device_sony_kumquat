@@ -43,3 +43,24 @@ index d161ebb..d06077b 100644
  havesock:
  #endif /* USES_TI_MAC80211 */
  
+diff --git a/wpa_supplicant/wps_supplicant.c b/wpa_supplicant/wps_supplicant.c
+index f37c5be..39a8df4 100644
+--- a/external/wpa_supplicant_8/wpa_supplicant/wps_supplicant.c
++++ b/external/wpa_supplicant_8/wpa_supplicant/wps_supplicant.c
+@@ -10,7 +10,15 @@
+ 
+ #include "common.h"
+ #include "eloop.h"
+-#include "uuid.h"
++
++
++#define UUID_LEN 16
++
++int uuid_str2bin(const char *str, u8 *bin);
++int uuid_bin2str(const u8 *bin, char *str, size_t max_len);
++int is_nil_uuid(const u8 *uuid);
++
++
+ #include "crypto/random.h"
+ #include "crypto/dh_group5.h"
+ #include "common/ieee802_11_defs.h"
