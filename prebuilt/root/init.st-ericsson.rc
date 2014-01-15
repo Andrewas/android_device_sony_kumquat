@@ -460,6 +460,13 @@ service dhcpcd_wlan0 /system/bin/dhcpcd -aABKL
     disabled
     oneshot
 
+on property:wlan.driver.status=ok
+    write /sys/class/rfkill/rfkill0/state 1 
+
+# power down wifi interface
+on property:wlan.driver.status=unloaded
+    write /sys/class/rfkill/rfkill0/state 0
+
 service dhcpcd_p2p /system/bin/dhcpcd -aABKL
     class main
     disabled
