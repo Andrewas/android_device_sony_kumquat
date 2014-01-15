@@ -32,11 +32,9 @@ TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 
 # Bluetooth
-BOARD_HAVE_BLUETOOTH := false
-BOARD_HAVE_BLUETOOTH_STE := false
-#COMMON_GLOBAL_CFLAGS += -DSTE_BT
-#BOARD_BLUEDROID_VENDOR_CONF := device/sony/kumquat/hardware/bluetooth/vnd_u8500.txt
-#BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/sony/kumquat/hardware/bluetooth/include
+BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_STE := true
+COMMON_GLOBAL_CFLAGS += -DSTE_BT
 
 # Audio
 BOARD_USES_GENERIC_AUDIO := false

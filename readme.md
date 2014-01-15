@@ -21,7 +21,7 @@ Now connect your phone which have runing FXP CM10 or CM10.1/CM10.2:
     cd ..
     mkdir -p kernel/sony
     cd kernel/sony
-    git clone https://github.com/munjeni/android_kernel_xperiago.git -b jb-dev u8500
+    git clone https://github.com/munjeni/android_kernel_xperiago.git -b cm-11 u8500
     cd ../..
 
 Patch android source code :

@@ -47,52 +47,39 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libglib
 
-# Hcidump
-PRODUCT_PACKAGES += \
-    hcidump
-
 # Libasound
 PRODUCT_PACKAGES += \
     libasound
 
-# Bluez
+# Bluez 5.13 libs
 PRODUCT_PACKAGES += \
-    sap \
-    libsap_pts \
+    libbtio \
+    libbluetooth
+
+# Bluez 5.13 daemon, android hal and haltest
+PRODUCT_PACKAGES += \
     bluetoothd \
-    hstest \
-    l2test \
-    rctest \
-    scotest \
-    agent \
-    attest \
-    avtest \
-    bdaddr \
-    lmptest \
-    sdptest \
-    hidpts \
-    avinfo \
-    hciconfig \
-    hcitool \
-    l2ping \
-    hciattach \
-    rfcomm \
-    btiotest
-
-# BT A2DP
-PRODUCT_PACKAGES += \
-    libasound_module_ctl_bluetooth \
-    libasound_module_pcm_bluetooth
-
-# libbt-vendor
-PRODUCT_PACKAGES += \
-    libbt-vendor
-
-# bluedroid, a2dp, BluetoothExt
-PRODUCT_PACKAGES += \
     bluetooth.default \
     audio.a2dp.default \
-    BluetoothExt
+    haltest
+
+# Bluez 5.13 btmon
+#PRODUCT_PACKAGES += \
+#    btmon
+
+# Bluez 5.13 tools
+PRODUCT_PACKAGES += \
+    hciattach \
+    hciconfig \
+    hcitool \
+    hcidump \
+    rfcomm \
+    rctest \
+    l2test \
+    l2ping \
+    sdptool \
+    ciptool \
+    bccmd
 
 # libaudioparameter
 PRODUCT_PACKAGES += \
@@ -185,6 +172,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/system/etc/ril_config:system/etc/ril_config \
     $(LOCAL_PATH)/prebuilt/system/bin/install_wlan:system/bin/install_wlan \
     $(LOCAL_PATH)/prebuilt/system/etc/ste_modem.sh:system/etc/ste_modem.sh
+
+
+# New wifi firmwares
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/system/etc/firmware/sdd_sagrad_1091_1098.bin:system/etc/firmware/sdd_sagrad_1091_1098.bin \
+    $(LOCAL_PATH)/prebuilt/system/etc/firmware/wsm_22.bin:system/etc/firmware/wsm_22.bin \
+    $(LOCAL_PATH)/prebuilt/system/etc/firmware/LICENCE.cw1200:system/etc/firmware/LICENCE.cw1200
 
 # WiFi config utility
 PRODUCT_COPY_FILES += \
