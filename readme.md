@@ -43,7 +43,6 @@ Our step is optional!!! Use only if you going to sync CM source code daily, than
     patch -p1 -R < device/sony/kumquat/patches/hardware_libhardware.patch
     patch -p1 -R < device/sony/kumquat/patches/hardware_libhardware_legacy.patch
     patch -p1 -R < device/sony/kumquat/patches/system_core.patch
-    patch -p1 -R < device/sony/kumquat/patches/system_netd.patch
     repo forall -p -c 'git checkout -f'
     repo sync
     patch -p1 < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
@@ -53,7 +52,6 @@ Our step is optional!!! Use only if you going to sync CM source code daily, than
     patch -p1 < device/sony/kumquat/patches/hardware_libhardware.patch
     patch -p1 < device/sony/kumquat/patches/hardware_libhardware_legacy.patch
     patch -p1 < device/sony/kumquat/patches/system_core.patch
-    patch -p1 < device/sony/kumquat/patches/system_netd.patch
 
 Download CM prebuilts :
    cd vendor/cm
