@@ -12,33 +12,33 @@ echo 1 >/sys/class/android_usb/android0/enable
 echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/button-backlight/brightness
 
 # trigger white, red, orange, yellow, green, blue, purple LED :)
-echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/red/brightness
-echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/green/brightness
-echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/blue/brightness
+echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-red/brightness
+echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-green/brightness
+echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-blue/brightness
 usleep 300000
-echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/red/brightness
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/green/brightness
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/blue/brightness
+echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-red/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-green/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-blue/brightness
 usleep 300000
-echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/red/brightness
-echo '50' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/green/brightness
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/blue/brightness
+echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-red/brightness
+echo '50' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-green/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-blue/brightness
 usleep 300000
-echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/red/brightness
-echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/green/brightness
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/blue/brightness
+echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-red/brightness
+echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-green/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-blue/brightness
 usleep 300000
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/red/brightness
-echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/green/brightness
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/blue/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-red/brightness
+echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-green/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-blue/brightness
 usleep 300000
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/red/brightness
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/green/brightness
-echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/blue/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-red/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-green/brightness
+echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-blue/brightness
 usleep 300000
-echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/red/brightness
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/green/brightness
-echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/blue/brightness
+echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-red/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-green/brightness
+echo '255' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-blue/brightness
 usleep 300000
 
 # trigger vibration
@@ -48,9 +48,9 @@ echo '200' > /sys/class/timed_output/vibrator/enable
 echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/button-backlight/brightness
 
 # disable LEDs
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/red/brightness
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/green/brightness
-echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/blue/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-red/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-green/brightness
+echo '0' > /sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-blue/brightness
 
 cat /dev/input/event2 > /dev/keycheck &
 sleep 3
@@ -82,3 +82,7 @@ then
   chroot / /init
 
 fi
+
+# continue booting
+# allways remount system ro
+mount -o remount,ro /system
