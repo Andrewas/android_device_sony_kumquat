@@ -25,7 +25,7 @@ Now connect your phone which have runing FXP CM10 or CM10.1/CM10.2:
     cd ../..
 
 Patch android source code :
-
+    sudo patch -p1 < device/sony/kumquat/patches/packages_apps_BluetoothExt.patch
     sudo patch -p1 < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
     sudo patch -p1 < device/sony/kumquat/patches/external_wpa_supplicant_8.patch
     sudo patch -p1 < device/sony/kumquat/patches/framework_av.patch
@@ -36,6 +36,7 @@ Patch android source code :
 
 Our step is optional!!! Use only if you going to sync CM source code daily, than simple revert each patch before you sync CM source code :
 
+    sudo patch -p1 -R < device/sony/kumquat/patches/packages_apps_BluetoothExt.patch
     sudo patch -p1 -R < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
     sudo patch -p1 -R < device/sony/kumquat/patches/external_wpa_supplicant_8.patch
     sudo patch -p1 -R < device/sony/kumquat/patches/framework_av.patch
@@ -46,7 +47,7 @@ Our step is optional!!! Use only if you going to sync CM source code daily, than
     sudo patch -p1 -R < device/sony/kumquat/patches/system_netd.patch
     repo forall -p -c 'git checkout -f'
     repo sync
-    sudo patch -p1 < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
+    sudo patch -p1 < device/sony/kumquat/patches/packages_apps_BluetoothExt.patch    sudo patch -p1 < device/sony/kumquat/patches/external_bluetooth_bluedroid.patch
     sudo patch -p1 < device/sony/kumquat/patches/external_wpa_supplicant_8.patch
     sudo patch -p1 < device/sony/kumquat/patches/framework_av.patch
     sudo patch -p1 < device/sony/kumquat/patches/framework_native.patch
