@@ -1,4 +1,4 @@
-UUSE_CAMERA_STUB := true
+USE_CAMERA_STUB := true
 
 # inherit from the proprietary version
 -include vendor/sony/kumquat/BoardConfigVendor.mk
