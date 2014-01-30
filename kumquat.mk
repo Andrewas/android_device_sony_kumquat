@@ -52,23 +52,28 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libasound
 
-# Bluez 5.13 libs
+# Bluez 5.14 libs
 PRODUCT_PACKAGES += \
     libbtio \
     libbluetooth
 
-# Bluez 5.13 daemon, android hal and haltest
+# setup functions to initialize the encoder and decoder for A2DP streams
+PRODUCT_PACKAGES += \
+    libsbc
+
+# Bluez 5.14 daemon, android hal and haltest
 PRODUCT_PACKAGES += \
     bluetoothd \
+    bluetoothd-snoop \
     bluetooth.default \
     audio.a2dp.default \
     haltest
 
-# Bluez 5.13 btmon
+# Bluez 5.14 btmon
 PRODUCT_PACKAGES += \
     btmon
 
-# Bluez 5.13 tools
+# Bluez 5.14 tools
 PRODUCT_PACKAGES += \
     hciattach \
     hciconfig \
@@ -80,7 +85,8 @@ PRODUCT_PACKAGES += \
     l2ping \
     sdptool \
     ciptool \
-    bccmd
+    bccmd \
+    btproxy
 
 # bt profile test (apk)
 #PRODUCT_PACKAGES += \

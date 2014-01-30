@@ -4,7 +4,7 @@ Getting Started :
 
     curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > /root/bin/repo
     chmod 755 /root/bin/repo
-	mkdir cm-11
+    mkdir cm-11
     cd cm-11
     repo init -u git://github.com/CyanogenMod/android.git -b cm-11.0
     repo sync
@@ -19,7 +19,7 @@ Now connect your phone which have runing CM11 :
     ./extract-files.sh
     cd ../../..
     cd hardware
-    git clone https://github.com/munjeni/aosp_4.3_hardware_semc.git -b master semc
+    git clone https://github.com/munjeni/android_hardware_semc.git -b master semc
     cd ..
     mkdir -p kernel/sony
     cd kernel/sony
@@ -77,4 +77,4 @@ You are ready to build :
     lunch cm_kumquat-userdebug
     make otapackage
 
-ENJOY! 
+ENJOY!
