@@ -179,7 +179,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/bootrec:root/sbin/bootrec \
     $(LOCAL_PATH)/recovery/usbid_init.sh:root/sbin/usbid_init.sh \
-    $(LOCAL_PATH)/recovery/postrecoveryboot.sh:root/sbin/postrecoveryboot.sh
+    $(LOCAL_PATH)/recovery/postrecoveryboot.sh:root/sbin/postrecoveryboot.sh \
+    $(LOCAL_PATH)/recovery/pre-recovery.sh:system/bin/pre-recovery.sh
 
 
 # HW Configs
@@ -292,4 +293,4 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 #512MB ram devices(https://source.android.com/devices/low-ram.html)
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.config.low_ram=false
+    ro.config.low_ram=true
