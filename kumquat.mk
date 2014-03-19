@@ -25,8 +25,7 @@ DEVICE_PACKAGE_OVERLAYS += device/sony/kumquat/overlay
 PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs \
-    e2fsck \
-    f2fs \
+    e2fsck
 
 # Hostapd
 PRODUCT_PACKAGES += \
