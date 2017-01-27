@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright (C) 2012 The Android Open Source Project
-     Copyright (C) 2013 Sony Mobile Communications AB.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,9 +12,6 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
-
-     NOTE: This file has been modified by Sony Mobile Communications AB.
-     Modifications are licensed under the License.
 -->
 
 <!--
@@ -81,68 +77,40 @@ Only the three quirks included above are recognized at this point:
 
 <MediaCodecs>
     <Decoders>
-        <MediaCodec name="OMX.ST.VFM.MPEG4Dec" >
+        <MediaCodec name="OMX.TI.DUCATI1.VIDEO.DECODER" >
             <Type name="video/mp4v-es" />
             <Type name="video/3gpp" />
-            <Quirk name="requires-allocate-on-input-ports" />
-            <Quirk name="requires-allocate-on-output-ports" />
-        </MediaCodec>
-        <MediaCodec name="OMX.google.mpeg4.decoder" type="video/mp4v-es" />
-        <MediaCodec name="OMX.google.h263.decoder" type="video/3gpp" />
-        <MediaCodec name="OMX.ST.VFM.MPEG4HostDec" >
-            <Type name="video/3gpp-sw" />
-            <Quirk name="requires-allocate-on-input-ports" />
-            <Quirk name="requires-allocate-on-output-ports" />
-        </MediaCodec>
-
-        <MediaCodec name="OMX.ST.VFM.H264Dec" >
             <Type name="video/avc" />
             <Quirk name="requires-allocate-on-input-ports" />
             <Quirk name="requires-allocate-on-output-ports" />
         </MediaCodec>
-        <MediaCodec name="OMX.google.h264.decoder" >
-            <Type name="video/avc" />
-            <Quirk name="requires-flush-before-shutdown" />
-        </MediaCodec>
 
-        <MediaCodec name="OMX.ST.VFM.VC1Dec" >
-            <Type name="video/vc1" />
-            <Quirk name="requires-allocate-on-input-ports" />
-            <Quirk name="requires-allocate-on-output-ports" />
-        </MediaCodec>
-
-        <MediaCodec name="OMX.ST.mp3.decoder" type="audio/mpeg" />
+        <MediaCodec name="OMX.google.mp3.decoder" type="audio/mpeg" />
         <MediaCodec name="OMX.google.amrnb.decoder" type="audio/3gpp" />
         <MediaCodec name="OMX.google.amrwb.decoder" type="audio/amr-wb" />
+        <MediaCodec name="OMX.google.aac.decoder" type="audio/mp4a-latm" />
         <MediaCodec name="OMX.google.g711.alaw.decoder" type="audio/g711-alaw" />
         <MediaCodec name="OMX.google.g711.mlaw.decoder" type="audio/g711-mlaw" />
-        <MediaCodec name="OMX.google.vorbis.decoder" >
-            <Type name="audio/vorbis" />
-            <Quirk name="requires-flush-before-shutdown" />
-        </MediaCodec>
-        <MediaCodec name="OMX.ST.AFM.decoder.wmapro_v10" type="audio/x-ms-wma" />
-        <MediaCodec name="OMX.google.vp8.decoder" type="video/x-vnd.on2.vp8" /> 
-        <MediaCodec name="OMX.google.vp9.decoder" type="video/x-vnd.on2.vp9" /> 
-        <MediaCodec name="OMX.google.aac.decoder" type="audio/mp4a-latm" />
-        <MediaCodec name="OMX.google.mp3.decoder" >
-            <Type name="audio/mpeg" />
-            <Quirk name="requires-flush-before-shutdown" />
-        </MediaCodec>
+        <MediaCodec name="OMX.google.vorbis.decoder" type="audio/vorbis" />
+
+        <MediaCodec name="OMX.google.mpeg4.decoder" type="video/mp4v-es" />
+        <MediaCodec name="OMX.google.h263.decoder" type="video/3gpp" />
+        <MediaCodec name="OMX.google.h264.decoder" type="video/avc" />
+        <MediaCodec name="OMX.google.vp8.decoder" type="video/x-vnd.on2.vp8" />
+        <MediaCodec name="OMX.google.vp9.decoder" type="video/x-vnd.on2.vp9" />
     </Decoders>
 
     <Encoders>
-        <MediaCodec name="OMX.ST.VFM.MPEG4Enc" >
+        <MediaCodec name="OMX.TI.DUCATI1.VIDEO.MPEG4E" >
             <Type name="video/mp4v-es" />
             <Type name="video/3gpp" />
             <Quirk name="requires-allocate-on-input-ports" />
             <Quirk name="requires-allocate-on-output-ports" />
-            <Quirk name="requires-store-metadata-before-idle" />
         </MediaCodec>
 
-        <MediaCodec name="OMX.ST.VFM.H264Enc" type="video/avc" >
+        <MediaCodec name="OMX.TI.DUCATI1.VIDEO.H264E" type="video/avc" >
             <Quirk name="requires-allocate-on-input-ports" />
             <Quirk name="requires-allocate-on-output-ports" />
-            <Quirk name="requires-store-metadata-before-idle" />
         </MediaCodec>
 
         <MediaCodec name="OMX.google.amrnb.encoder" type="audio/3gpp" />
